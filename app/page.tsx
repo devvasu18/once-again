@@ -110,6 +110,68 @@ export default function Home() {
           }}
           onClick={scrollToButton}
         >
+          <div 
+            className="relative z-10 py-16 px-8"
+            style={{
+              backgroundImage: 'url("https://cdn-public.notjustanalytics.com/homepage/background.webp")',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat'
+            }}
+          >
+            <h2 className="text-4xl md:text-6xl font-bold text-white mb-4">
+              Connect with Your Network
+            </h2>
+            
+            {/* Profile Images Network */}
+            <div className="relative w-96 h-96 mx-auto mb-8">
+              {/* Central Profile - Fixed */}
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
+                <div className="w-24 h-24 rounded-full border-4 border-gray-300 overflow-hidden shadow-lg bg-white p-1">
+                  <img
+                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face"
+                    alt="Center Profile"
+                    className="w-full h-full object-cover rounded-full profile-image"
+                  />
+                </div>
+              </div>
+
+              {/* Rotating Surrounding Profiles */}
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <div className="relative w-80 h-80 rotating-container">
+                  {surroundingImages.map((profile, index) => {
+                    const angle = (index * 45) * (Math.PI / 180) // 45 degrees apart
+                    const radius = 140
+                    const x = Math.cos(angle) * radius
+                    const y = Math.sin(angle) * radius
+
+                    return (
+                      <div
+                        key={profile.id}
+                        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 profile-container"
+                        style={{
+                          '--x': `${x}px`,
+                          '--y': `${y}px`
+                        } as React.CSSProperties}
+                      >
+                        <div className={`w-16 h-16 rounded-full border-3 ${profile.borderColor} overflow-hidden shadow-md bg-white p-0.5`}>
+                          <img
+                            src={profile.image}
+                            alt={profile.name}
+                            className="w-full h-full object-cover rounded-full profile-image"
+                          />
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            </div>
+
+            <p className="text-xl text-white/90 max-w-2xl mx-auto">
+              Discover connections and insights across your social network
+            </p>
+          </div>
         </div>
 
         {/* Track People Section */}

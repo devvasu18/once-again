@@ -574,7 +574,7 @@ export default function HomePage() {
             backgroundRepeat: 'no-repeat'
           }}
         >
-          <div className="absolute inset-0 bg-white/90"></div>
+          <div className="absolute inset-0 "></div>
           <div className="relative z-10">
           <div className="flex items-start space-x-6">
             {/* Profile Picture */}
@@ -597,8 +597,8 @@ export default function HomePage() {
                   <h1 className="text-2xl font-bold text-gray-900 flex items-center space-x-2">
                     <span>VASU</span>
                   </h1>
-                  <p className="text-gray-600 mt-1">
-                    Last updated: <span className="font-bold text-purple-600">{new Date().toLocaleString('en-US', { 
+                  <p className="text-white-600 mt-1">
+                    Last updated: <span className="font-bold text-black">{new Date().toLocaleString('en-US', { 
                       hour: 'numeric', 
                       minute: '2-digit', 
                       hour12: true
@@ -618,19 +618,19 @@ export default function HomePage() {
                   <div className="text-2xl font-bold text-gray-900 transition-all duration-300">
                     {followersCount.toLocaleString()}
                   </div>
-                  <div className="text-sm text-gray-600">Followers</div>
+                  <div className="text-sm text-white-600">Followers</div>
                 </div>
                 <div className="text-center">
                   <div className="text-2xl font-bold text-gray-900 transition-all duration-300">
                     {followingsCount.toLocaleString()}
                   </div>
-                  <div className="text-sm text-gray-600">Followings</div>
+                  <div className="text-sm text-white-600">Followings</div>
                 </div>
                 <div className="text-center">
                   <div className="text-2xl font-bold text-gray-900 transition-all duration-300">
                     {postsCount.toLocaleString()}
                   </div>
-                  <div className="text-sm text-gray-600">Posts</div>
+                  <div className="text-sm text-white-600">Posts</div>
                 </div>
               </div>
             </div>
