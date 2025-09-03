@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;  /* Safari and Chrome */
+  }
+  
+  .profile-image {
+    transform: rotate(0deg);
+    transition: transform 0.3s ease;
+  }
+  
+  .profile-image:hover {
+    transform: rotate(0deg) scale(1.05);
+  }
+  
+  .rotating-container {
+    animation: spin 20s linear infinite;
+  }
+  
+  .profile-container {
+    animation: counter-spin 20s linear infinite;
+  }
+  
+  .profile-container[style*="transform"] {
+    animation: counter-spin 20s linear infinite !important;
+  }
+  
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  @keyframes counter-spin {
+    from {
+      transform: translate(calc(-50% + var(--x, 0px)), calc(-50% + var(--y, 0px))) rotate(0deg);
+    }
+    to {
+      transform: translate(calc(-50% + var(--x, 0px)), calc(-50% + var(--y, 0px))) rotate(-360deg);
+    }
+  }
+}
