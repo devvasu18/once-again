@@ -6,6 +6,7 @@ import {
   ChartBarIcon,
   UserIcon,
   MagnifyingGlassIcon,
+  HomeIcon,
   ArrowTrendingUpIcon,
   ArrowTrendingDownIcon,
   EyeIcon,
@@ -40,22 +41,35 @@ export default function StatsPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <header 
+        className="shadow-sm border-b border-gray-200 relative overflow-hidden"
+        style={{
+          backgroundImage: 'url("https://cdn-public.notjustanalytics.com/homepage/background.webp")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        <div className="absolute inset-0 bg-black/20"></div>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center">
-              <Link href="/" className="text-2xl font-bold text-gray-900">Instalker</Link>
+              <Link href="/" className="text-2xl font-bold text-white">Instalker</Link>
             </div>
             <nav className="hidden md:flex space-x-8">
-              <Link href="/discover" className="flex items-center space-x-1 text-gray-600 hover:text-gray-900 transition-colors">
+              <Link href="/home" className="flex items-center space-x-1 text-white/90 hover:text-white transition-colors">
+                <HomeIcon className="h-5 w-5" />
+                <span>Home</span>
+              </Link>
+              <Link href="/discover" className="flex items-center space-x-1 text-white/90 hover:text-white transition-colors">
                 <MagnifyingGlassIcon className="h-5 w-5" />
                 <span>Discover</span>
               </Link>
-              <Link href="/stats" className="flex items-center space-x-1 text-purple-600 hover:text-purple-700 transition-colors">
+              <Link href="/stats" className="flex items-center space-x-1 text-white hover:text-white/90 transition-colors">
                 <ChartBarIcon className="h-5 w-5" />
                 <span>Stats</span>
               </Link>
-              <Link href="/profile" className="flex items-center space-x-1 text-gray-600 hover:text-gray-900 transition-colors">
+              <Link href="/profile" className="flex items-center space-x-1 text-white/90 hover:text-white transition-colors">
                 <UserIcon className="h-5 w-5" />
                 <span>Profile</span>
               </Link>

@@ -8,6 +8,7 @@ import {
   PhotoIcon,
   LockClosedIcon,
   UserIcon,
+  HomeIcon,
   ChartBarIcon,
   MagnifyingGlassIcon,
   XMarkIcon
@@ -545,6 +546,10 @@ export default function HomePage() {
               <Link href="/" className="text-2xl font-bold text-white">Instalker</Link>
             </div>
             <nav className="hidden md:flex space-x-8">
+              <Link href="/home" className="flex items-center space-x-1 text-white hover:text-white/90 transition-colors">
+                <HomeIcon className="h-5 w-5" />
+                <span>Home</span>
+              </Link>
               <Link href="/discover" className="flex items-center space-x-1 text-white/90 hover:text-white transition-colors">
                 <MagnifyingGlassIcon className="h-5 w-5" />
                 <span>Discover</span>

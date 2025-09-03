@@ -2,7 +2,7 @@
 
 import React, { useRef } from 'react'
 import Link from 'next/link'
-import { ChevronRightIcon } from '@heroicons/react/24/outline'
+import { ChevronRightIcon, HomeIcon } from '@heroicons/react/24/outline'
 
 // Sample profile images data (you can replace with actual images)
 const profileImages = [
@@ -82,15 +82,28 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       {/* Header */}
-      <header className="bg-white/80 backdrop-blur-sm shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <header 
+        className="shadow-sm relative overflow-hidden"
+        style={{
+          backgroundImage: 'url("https://cdn-public.notjustanalytics.com/homepage/background.webp")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        <div className="absolute inset-0 bg-black/20"></div>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center">
-              <h1 className="text-2xl font-bold text-gray-900">Instalker</h1>
+              <h1 className="text-2xl font-bold text-white">Instalker</h1>
             </div>
             <nav className="hidden md:flex space-x-8">
-              <a href="#" className="text-gray-600 hover:text-gray-900">Features</a>
-              <a href="#" className="text-gray-600 hover:text-gray-900">About</a>
+              <Link href="/home" className="flex items-center space-x-1 text-white hover:text-white/90 transition-colors">
+                <HomeIcon className="h-5 w-5" />
+                <span>Home</span>
+              </Link>
+              <a href="#" className="text-white/90 hover:text-white transition-colors">Features</a>
+              <a href="#" className="text-white/90 hover:text-white transition-colors">About</a>
             </nav>
           </div>
         </div>

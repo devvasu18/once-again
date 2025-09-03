@@ -1,14 +1,16 @@
 'use client'
 
-import React from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { 
   MagnifyingGlassIcon,
   UserIcon,
   ChartBarIcon,
+  HomeIcon,
   HeartIcon,
   UserGroupIcon,
-  EyeIcon
+  EyeIcon,
+  XMarkIcon
 } from '@heroicons/react/24/outline'
 
 export default function DiscoverPage() {
@@ -17,7 +19,7 @@ export default function DiscoverPage() {
       id: 1,
       name: 'Sarah Johnson',
       username: '@sarah_j',
-      image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face',
+      image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=face',
       followers: '12.5K',
       following: '1.2K',
       posts: '245',
@@ -81,25 +83,171 @@ export default function DiscoverPage() {
     }
   ]
 
+  // State for popup and story viewer
+  const [showPopup, setShowPopup] = useState(false)
+  const [selectedProfile, setSelectedProfile] = useState(null)
+  const [isStoryOpen, setIsStoryOpen] = useState(false)
+  const [currentUserIndex, setCurrentUserIndex] = useState(0)
+  const [currentStoryIndex, setCurrentStoryIndex] = useState(0)
+  const [progress, setProgress] = useState(0)
+  const progressRef = useRef(null)
+  const intervalRef = useRef(null)
+
+  // Story data for each profile
+  const storyUsers = profiles.map(profile => ({
+    id: profile.id,
+    name: profile.name,
+    username: profile.username,
+    image: profile.image,
+    stories: [
+      {
+        id: 1,
+        image: `https://images.unsplash.com/photo-${1500000000000 + profile.id * 1000000}?w=400&h=600&fit=crop`,
+        timestamp: '2h ago'
+      },
+      {
+        id: 2,
+        image: `https://images.unsplash.com/photo-${1500000000000 + profile.id * 1000000 + 100000}?w=400&h=600&fit=crop`,
+        timestamp: '1h ago'
+      },
+      {
+        id: 3,
+        image: `https://images.unsplash.com/photo-${1500000000000 + profile.id * 1000000 + 200000}?w=400&h=600&fit=crop`,
+        timestamp: '30m ago'
+      }
+    ]
+  }))
+
+  // Popup functions
+  const handleProfileClick = (profile) => {
+    setSelectedProfile(profile)
+    setShowPopup(true)
+  }
+
+  const handlePopupYes = () => {
+    setShowPopup(false)
+    const userIndex = storyUsers.findIndex(user => user.id === selectedProfile.id)
+    setCurrentUserIndex(userIndex)
+    setCurrentStoryIndex(0)
+    setProgress(0)
+    setIsStoryOpen(true)
+  }
+
+  const handlePopupNo = () => {
+    setShowPopup(false)
+    setSelectedProfile(null)
+  }
+
+  // Story viewer functions
+  const closeStory = () => {
+    setIsStoryOpen(false)
+    setCurrentUserIndex(0)
+    setCurrentStoryIndex(0)
+    setProgress(0)
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current)
+    }
+  }
+
+  const nextStory = () => {
+    const currentUser = storyUsers[currentUserIndex]
+    if (currentStoryIndex < currentUser.stories.length - 1) {
+      setCurrentStoryIndex(currentStoryIndex + 1)
+      setProgress(0)
+    } else if (currentUserIndex < storyUsers.length - 1) {
+      setCurrentUserIndex(currentUserIndex + 1)
+      setCurrentStoryIndex(0)
+      setProgress(0)
+    } else {
+      closeStory()
+    }
+  }
+
+  const previousStory = () => {
+    if (currentStoryIndex > 0) {
+      setCurrentStoryIndex(currentStoryIndex - 1)
+      setProgress(0)
+    } else if (currentUserIndex > 0) {
+      setCurrentUserIndex(currentUserIndex - 1)
+      const prevUser = storyUsers[currentUserIndex - 1]
+      setCurrentStoryIndex(prevUser.stories.length - 1)
+      setProgress(0)
+    }
+  }
+
+  const handleSwipe = (direction) => {
+    if (direction === 'left') {
+      nextStory()
+    } else if (direction === 'right') {
+      previousStory()
+    }
+  }
+
+  const handleTap = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const width = rect.width
+    
+    if (x < width / 2) {
+      previousStory()
+    } else {
+      nextStory()
+    }
+  }
+
+  // Auto-play stories
+  useEffect(() => {
+    if (isStoryOpen) {
+      intervalRef.current = setInterval(() => {
+        setProgress(prev => {
+          if (prev >= 100) {
+            nextStory()
+            return 0
+          }
+          return prev + 2
+        })
+      }, 100)
+    }
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current)
+      }
+    }
+  }, [isStoryOpen, currentUserIndex, currentStoryIndex])
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <header 
+        className="shadow-sm border-b border-gray-200 relative overflow-hidden"
+        style={{
+          backgroundImage: 'url("https://cdn-public.notjustanalytics.com/homepage/background.webp")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        <div className="absolute inset-0 bg-black/20"></div>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center">
-              <Link href="/" className="text-2xl font-bold text-gray-900">Instalker</Link>
+              <Link href="/" className="text-2xl font-bold text-white">Instalker</Link>
             </div>
             <nav className="hidden md:flex space-x-8">
-              <Link href="/discover" className="flex items-center space-x-1 text-purple-600 hover:text-purple-700 transition-colors">
+              <Link href="/home" className="flex items-center space-x-1 text-white/90 hover:text-white transition-colors">
+                <HomeIcon className="h-5 w-5" />
+                <span>Home</span>
+              </Link>
+              <Link href="/discover" className="flex items-center space-x-1 text-white hover:text-white/90 transition-colors">
                 <MagnifyingGlassIcon className="h-5 w-5" />
                 <span>Discover</span>
               </Link>
-              <Link href="/stats" className="flex items-center space-x-1 text-gray-600 hover:text-gray-900 transition-colors">
+              <Link href="/stats" className="flex items-center space-x-1 text-white/90 hover:text-white transition-colors">
                 <ChartBarIcon className="h-5 w-5" />
                 <span>Stats</span>
               </Link>
-              <Link href="/profile" className="flex items-center space-x-1 text-gray-600 hover:text-gray-900 transition-colors">
+              <Link href="/profile" className="flex items-center space-x-1 text-white/90 hover:text-white transition-colors">
                 <UserIcon className="h-5 w-5" />
                 <span>Profile</span>
               </Link>
@@ -125,7 +273,19 @@ export default function DiscoverPage() {
         {/* Profiles Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {profiles.map((profile) => (
-            <div key={profile.id} className="bg-white rounded-2xl shadow-sm p-6 hover:shadow-md transition-shadow">
+            <div 
+              key={profile.id} 
+              className="rounded-2xl shadow-sm p-6 hover:shadow-md transition-shadow relative overflow-hidden cursor-pointer"
+              style={{
+                backgroundImage: 'url("https://cdn-public.notjustanalytics.com/homepage/background.webp")',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat'
+              }}
+              onClick={() => handleProfileClick(profile)}
+            >
+              <div className="absolute inset-0 "></div>
+              <div className="relative z-10">
               <div className="flex items-center space-x-4 mb-4">
                 <div className="relative">
                   <img
@@ -168,22 +328,136 @@ export default function DiscoverPage() {
                   <div className="text-lg font-semibold text-gray-900">{profile.posts}</div>
                   <div className="text-xs text-gray-600">Posts</div>
                 </div>
-              </div>
+                              </div>
 
-              {/* Actions */}
-              <div className="flex space-x-2">
-                <button className="flex-1 bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700 transition-colors flex items-center justify-center space-x-2">
-                  <EyeIcon className="h-4 w-4" />
-                  <span>View Profile</span>
+               
+              </div>
+              </div>
+            ))}
+        </div>
+      </div>
+
+      {/* Popup Modal */}
+      {showPopup && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-2xl p-6 max-w-sm mx-4">
+            <div className="text-center">
+              <div className="w-16 h-16 mx-auto mb-4 rounded-full overflow-hidden">
+                <img
+                  src={selectedProfile?.image}
+                  alt={selectedProfile?.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                View {selectedProfile?.name}'s Story?
+              </h3>
+              <p className="text-gray-600 mb-6">
+                This will open their story viewer
+              </p>
+              <div className="flex space-x-3">
+                <button
+                  onClick={handlePopupNo}
+                  className="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+                >
+                  No
                 </button>
-                <button className="bg-gray-100 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors flex items-center justify-center">
-                  <HeartIcon className="h-4 w-4" />
+                <button
+                  onClick={handlePopupYes}
+                  className="flex-1 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+                >
+                  Yes
                 </button>
               </div>
             </div>
-          ))}
+          </div>
         </div>
-      </div>
+      )}
+
+      {/* Story Viewer Modal */}
+      {isStoryOpen && (
+        <div className="fixed inset-0 bg-black z-50 flex items-center justify-center">
+          <div className="relative w-full h-full max-w-md mx-auto">
+            {/* Progress Bars */}
+            <div className="absolute top-4 left-4 right-4 z-10">
+              <div className="flex space-x-1">
+                {storyUsers[currentUserIndex]?.stories.map((_, index) => (
+                  <div key={index} className="flex-1 h-1 bg-white/30 rounded-full overflow-hidden">
+                    <div
+                      className={`h-full bg-white transition-all duration-100 ${
+                        index === currentStoryIndex ? 'w-full' : 
+                        index < currentStoryIndex ? 'w-full' : 'w-0'
+                      }`}
+                      style={{
+                        width: index === currentStoryIndex ? `${progress}%` : 
+                               index < currentStoryIndex ? '100%' : '0%'
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* User Info */}
+            <div className="absolute top-12 left-4 z-10 flex items-center space-x-3">
+              <img
+                src={storyUsers[currentUserIndex]?.image}
+                alt={storyUsers[currentUserIndex]?.name}
+                className="w-8 h-8 rounded-full object-cover"
+              />
+              <div>
+                <p className="text-white font-semibold text-sm">
+                  {storyUsers[currentUserIndex]?.name}
+                </p>
+                <p className="text-white/80 text-xs">
+                  {storyUsers[currentUserIndex]?.stories[currentStoryIndex]?.timestamp}
+                </p>
+              </div>
+            </div>
+
+            {/* Close Button */}
+            <button
+              onClick={closeStory}
+              className="absolute top-4 right-4 z-10 text-white hover:text-white/80 transition-colors"
+            >
+              <XMarkIcon className="h-6 w-6" />
+            </button>
+
+            {/* Story Content */}
+            <div 
+              className="w-full h-full relative"
+              onTouchStart={(e) => {
+                const startX = e.touches[0].clientX
+                const handleTouchEnd = (e) => {
+                  const endX = e.changedTouches[0].clientX
+                  const diff = startX - endX
+                  if (Math.abs(diff) > 50) {
+                    handleSwipe(diff > 0 ? 'left' : 'right')
+                  }
+                  document.removeEventListener('touchend', handleTouchEnd)
+                }
+                document.addEventListener('touchend', handleTouchEnd)
+              }}
+            >
+              <img
+                src={storyUsers[currentUserIndex]?.stories[currentStoryIndex]?.image}
+                alt="Story"
+                className="w-full h-full object-cover"
+              />
+              
+              {/* Tap Areas */}
+              <div 
+                className="absolute left-0 top-0 w-1/2 h-full cursor-pointer"
+                onClick={handleTap}
+              />
+              <div 
+                className="absolute right-0 top-0 w-1/2 h-full cursor-pointer"
+                onClick={handleTap}
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
