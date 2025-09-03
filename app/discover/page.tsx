@@ -310,7 +310,7 @@ export default function DiscoverPage() {
                       </svg>
                     )}
                   </h3>
-                  <p className="text-sm text-gray-600">{profile.username}</p>
+                  <p className="text-sm text-white-600">{profile.username}</p>
                 </div>
               </div>
 
@@ -318,15 +318,15 @@ export default function DiscoverPage() {
               <div className="grid grid-cols-3 gap-4 mb-4">
                 <div className="text-center">
                   <div className="text-lg font-semibold text-gray-900">{profile.followers}</div>
-                  <div className="text-xs text-gray-600">Followers</div>
+                  <div className="text-xs text-white-600">Followers</div>
                 </div>
                 <div className="text-center">
                   <div className="text-lg font-semibold text-gray-900">{profile.following}</div>
-                  <div className="text-xs text-gray-600">Following</div>
+                  <div className="text-xs text-white-600">Following</div>
                 </div>
                 <div className="text-center">
                   <div className="text-lg font-semibold text-gray-900">{profile.posts}</div>
-                  <div className="text-xs text-gray-600">Posts</div>
+                  <div className="text-xs text-white-600">Posts</div>
                 </div>
                               </div>
 
