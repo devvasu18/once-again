@@ -27,6 +27,7 @@ export default function HomePage() {
   const progressRef = useRef<HTMLDivElement>(null)
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
   const [showMoreStalkers, setShowMoreStalkers] = useState(false)
+  const [watchedStories, setWatchedStories] = useState<{[userId: number]: number}>({})
 
   const maxFollowers = 398
   const maxFollowings = 238
@@ -288,8 +289,15 @@ export default function HomePage() {
 
   // Story functions
   const openStory = (userIndex: number) => {
+    const userId = storyUsers[userIndex].id
+    const lastWatchedIndex = watchedStories[userId] || 0
+    const userStoriesCount = storyUsers[userIndex].stories.length
+    
+    // If all stories have been watched, start from the beginning
+    const startIndex = lastWatchedIndex >= userStoriesCount ? 0 : lastWatchedIndex
+    
     setCurrentUserIndex(userIndex)
-    setCurrentStoryIndex(0)
+    setCurrentStoryIndex(startIndex)
     setProgress(0)
     setIsStoryOpen(true)
   }
@@ -356,18 +364,43 @@ export default function HomePage() {
   }
 
   const handleTap = (side: 'left' | 'right') => {
+    const userId = storyUsers[currentUserIndex].id
+    
     if (side === 'left') {
       // Tap left = previous story of same user
       if (currentStoryIndex > 0) {
         setCurrentStoryIndex(currentStoryIndex - 1)
         setProgress(0)
+      } else {
+        // If on first story, go to previous user's last story
+        if (currentUserIndex > 0) {
+          setCurrentUserIndex(currentUserIndex - 1)
+          setCurrentStoryIndex(storyUsers[currentUserIndex - 1].stories.length - 1)
+          setProgress(0)
+        }
       }
     } else {
+      // Mark current story as watched before moving to next
+      setWatchedStories(prev => ({
+        ...prev,
+        [userId]: Math.max(prev[userId] || 0, currentStoryIndex + 1)
+      }))
+      
       // Tap right = next story of same user
       const currentUser = storyUsers[currentUserIndex]
       if (currentStoryIndex < currentUser.stories.length - 1) {
         setCurrentStoryIndex(currentStoryIndex + 1)
         setProgress(0)
+      } else {
+        // If on last story, go to next user's first story
+        if (currentUserIndex < storyUsers.length - 1) {
+          setCurrentUserIndex(currentUserIndex + 1)
+          setCurrentStoryIndex(0)
+          setProgress(0)
+        } else {
+          // If on last user's last story, close the story viewer
+          closeStory()
+        }
       }
     }
   }
@@ -378,6 +411,12 @@ export default function HomePage() {
       intervalRef.current = setInterval(() => {
         setProgress(prev => {
           if (prev >= 100) {
+            // Mark current story as watched before moving to next
+            const userId = storyUsers[currentUserIndex].id
+            setWatchedStories(prev => ({
+              ...prev,
+              [userId]: Math.max(prev[userId] || 0, currentStoryIndex + 1)
+            }))
             nextStory()
             return 0
           }
@@ -763,6 +802,21 @@ export default function HomePage() {
               opacity: 0.9
             }}
           ></div>
+          
+          {/* Floating Colorful Wrappers */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute top-4 left-4 w-8 h-8 bg-pink-400 rounded-full animate-float opacity-60"></div>
+            <div className="absolute top-12 right-8 w-6 h-6 bg-blue-400 rounded-full animate-float-delayed opacity-50"></div>
+            <div className="absolute top-20 left-12 w-4 h-4 bg-yellow-400 rounded-full animate-float-slow opacity-70"></div>
+            <div className="absolute top-32 right-16 w-10 h-10 bg-green-400 rounded-full animate-float opacity-40"></div>
+            <div className="absolute top-40 left-20 w-5 h-5 bg-purple-400 rounded-full animate-float-delayed opacity-60"></div>
+            <div className="absolute top-48 right-24 w-7 h-7 bg-red-400 rounded-full animate-float-slow opacity-50"></div>
+            <div className="absolute top-56 left-32 w-6 h-6 bg-indigo-400 rounded-full animate-float opacity-45"></div>
+            <div className="absolute top-64 right-32 w-8 h-8 bg-orange-400 rounded-full animate-float-delayed opacity-55"></div>
+            <div className="absolute top-72 left-40 w-5 h-5 bg-teal-400 rounded-full animate-float-slow opacity-65"></div>
+            <div className="absolute top-80 right-40 w-9 h-9 bg-rose-400 rounded-full animate-float opacity-35"></div>
+          </div>
+          
           <div className="relative z-10">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Stories</h2>
           <div className="flex space-x-4 overflow-x-auto pb-2 scrollbar-hide">
@@ -799,6 +853,7 @@ export default function HomePage() {
               opacity: 0.9
             }}
           ></div>
+          
           <div className="relative z-10">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Secret Stalkers</h2>
           <div className="space-y-3">
@@ -849,6 +904,47 @@ export default function HomePage() {
               </button>
             </div>
           )}
+          </div>
+          
+          {/* Floating Colorful Wrappers - Full Section Coverage */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            {/* Top Row */}
+            <div className="absolute top-4 left-4 w-6 h-6 bg-cyan-400 rounded-full animate-float opacity-50"></div>
+            <div className="absolute top-8 right-8 w-5 h-5 bg-emerald-400 rounded-full animate-float-delayed opacity-60"></div>
+            <div className="absolute top-1/3 left-6 w-8 h-8 bg-fuchsia-400 rounded-full animate-float-delayed opacity-40"></div>
+            <div className="absolute top-1/3 right-12 w-6 h-6 bg-lime-400 rounded-full animate-float-slow opacity-70"></div>
+            <div className="absolute top-1/3 left-1/2 w-5 h-5 bg-sky-400 rounded-full animate-float opacity-35"></div>
+            <div className="absolute top-1/3 right-1/3 w-9 h-9 bg-pink-400 rounded-full animate-float-delayed opacity-50"></div>
+            <div className="absolute top-12 left-12 w-7 h-7 bg-violet-400 rounded-full animate-float-slow opacity-45"></div>
+            <div className="absolute top-16 right-16 w-4 h-4 bg-amber-400 rounded-full animate-float opacity-55"></div>
+            
+            {/* Middle Row */}
+            <div className="absolute top-1/3 left-6 w-8 h-8 bg-fuchsia-400 rounded-full animate-float-delayed opacity-40"></div>
+            <div className="absolute top-1/3 right-12 w-6 h-6 bg-lime-400 rounded-full animate-float-slow opacity-70"></div>
+            <div className="absolute top-1/3 left-1/2 w-5 h-5 bg-sky-400 rounded-full animate-float opacity-35"></div>
+            <div className="absolute top-1/3 right-1/3 w-9 h-9 bg-pink-400 rounded-full animate-float-delayed opacity-50"></div>
+            
+            {/* Center Area */}
+            <div className="absolute top-1/2 left-8 w-7 h-7 bg-orange-400 rounded-full animate-float-slow opacity-65"></div>
+            <div className="absolute top-1/2 right-8 w-5 h-5 bg-green-400 rounded-full animate-float opacity-45"></div>
+            <div className="absolute top-1/3 left-6 w-8 h-8 bg-fuchsia-400 rounded-full animate-float-delayed opacity-40"></div>
+            <div className="absolute top-1/3 right-12 w-6 h-6 bg-lime-400 rounded-full animate-float-slow opacity-70"></div>
+            <div className="absolute top-1/3 left-1/2 w-5 h-5 bg-sky-400 rounded-full animate-float opacity-35"></div>
+            <div className="absolute top-1/3 right-1/3 w-9 h-9 bg-pink-400 rounded-full animate-float-delayed opacity-50"></div>
+            <div className="absolute top-1/2 left-1/4 w-6 h-6 bg-indigo-400 rounded-full animate-float-delayed opacity-50"></div>
+            <div className="absolute top-1/2 right-1/4 w-8 h-8 bg-rose-400 rounded-full animate-float-slow opacity-40"></div>
+            
+            {/* Bottom Middle */}
+            <div className="absolute top-2/3 left-10 w-5 h-5 bg-yellow-400 rounded-full animate-float opacity-60"></div>
+            <div className="absolute top-2/3 right-10 w-7 h-7 bg-teal-400 rounded-full animate-float-delayed opacity-45"></div>
+            <div className="absolute top-2/3 left-1/3 w-6 h-6 bg-purple-400 rounded-full animate-float-slow opacity-35"></div>
+            <div className="absolute top-2/3 right-1/3 w-4 h-4 bg-red-400 rounded-full animate-float opacity-70"></div>
+            
+            {/* Bottom Row */}
+            <div className="absolute bottom-16 left-6 w-8 h-8 bg-cyan-400 rounded-full animate-float-delayed opacity-50"></div>
+            <div className="absolute bottom-12 right-8 w-6 h-6 bg-emerald-400 rounded-full animate-float-slow opacity-60"></div>
+            <div className="absolute bottom-8 left-12 w-5 h-5 bg-violet-400 rounded-full animate-float opacity-45"></div>
+            <div className="absolute bottom-4 right-12 w-7 h-7 bg-amber-400 rounded-full animate-float-delayed opacity-55"></div>
           </div>
         </div>
       </div>
