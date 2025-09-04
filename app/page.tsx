@@ -196,10 +196,36 @@ export default function Home() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-black relative overflow-hidden">
+      {/* Silver Ink Spread Background */}
+      <div className="absolute inset-0">
+        {/* Large ink blots */}
+        <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-gray-300/40 to-gray-500/25 rounded-full blur-2xl animate-pulse"></div>
+        <div className="absolute top-40 right-20 w-80 h-80 bg-gradient-to-bl from-gray-400/50 to-gray-600/35 rounded-full blur-xl animate-bounce"></div>
+        <div className="absolute bottom-32 left-1/4 w-72 h-72 bg-gradient-to-tr from-gray-300/55 to-gray-500/40 rounded-full blur-2xl animate-ping"></div>
+        <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-gradient-to-tl from-gray-400/45 to-gray-600/30 rounded-full blur-xl animate-pulse"></div>
+        <div className="absolute bottom-20 right-10 w-88 h-88 bg-gradient-to-br from-gray-300/50 to-gray-500/35 rounded-full blur-2xl animate-bounce"></div>
+        
+        {/* Medium ink spots */}
+        <div className="absolute top-32 left-1/3 w-48 h-48 bg-gradient-to-r from-gray-400/35 to-gray-600/25 rounded-full blur-lg"></div>
+        <div className="absolute bottom-40 right-1/4 w-56 h-56 bg-gradient-to-l from-gray-300/45 to-gray-500/35 rounded-full blur-xl"></div>
+        <div className="absolute top-2/3 left-1/5 w-40 h-40 bg-gradient-to-br from-gray-400/50 to-gray-600/40 rounded-full blur-lg"></div>
+        
+        {/* Small ink droplets */}
+        <div className="absolute top-16 left-2/3 w-24 h-24 bg-gradient-to-r from-gray-500/55 to-gray-700/40 rounded-full blur-md"></div>
+        <div className="absolute bottom-24 left-1/2 w-32 h-32 bg-gradient-to-l from-gray-400/45 to-gray-600/35 rounded-full blur-lg"></div>
+        <div className="absolute top-1/3 right-1/5 w-28 h-28 bg-gradient-to-br from-gray-300/50 to-gray-500/40 rounded-full blur-md"></div>
+        <div className="absolute bottom-1/3 right-2/3 w-36 h-36 bg-gradient-to-tl from-gray-400/35 to-gray-600/25 rounded-full blur-lg"></div>
+        
+        {/* Additional scattered ink effects */}
+        <div className="absolute top-1/4 left-1/6 w-20 h-20 bg-gray-400/45 rounded-full blur-sm"></div>
+        <div className="absolute bottom-1/4 right-1/6 w-16 h-16 bg-gray-500/55 rounded-full blur-sm"></div>
+        <div className="absolute top-3/4 left-3/4 w-12 h-12 bg-gray-300/60 rounded-full blur-sm"></div>
+        <div className="absolute bottom-1/6 left-1/3 w-14 h-14 bg-gray-400/45 rounded-full blur-sm"></div>
+      </div>
       {/* Header */}
       <header 
-        className="shadow-sm relative overflow-hidden"
+        className="relative z-20 backdrop-blur-sm border-b border-gray-800/50"
         style={{
           backgroundImage: 'url("https://cdn-public.notjustanalytics.com/homepage/background.webp")',
           backgroundSize: 'cover',
@@ -207,7 +233,7 @@ export default function Home() {
           backgroundRepeat: 'no-repeat'
         }}
       >
-        <div className="absolute inset-0 bg-black/20"></div>
+        <div className="absolute inset-0 bg-black/60"></div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center">
@@ -226,13 +252,13 @@ export default function Home() {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-4x1 mx-auto py-12 ml-20 mr-20">
+      <main className="relative z-10 max-w-8xl mx-auto py-12 px-1 sm:px-2 lg:px-4">
         {/* Grid Layout with Three Sections */}
-        <div className="grid grid-cols-4 gap-4 mb-16">
+        <div className="grid grid-cols-12 gap-4 mb-16">
           {/* Left Grid Section */}
-          <div className="text-center relative rounded-2xl min-h-[250px] bg-transparent col-span-1">
-            <div className="py-16 px-8">
-              <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-6 flex justify-center">
+          <div className="text-center relative rounded-2xl min-h-[250px] bg-transparent col-span-3 mr-2">
+            <div className="py-16 px-4">
+              <h3 className="text-xl md:text-2xl font-bold text-white mb-6 flex justify-center">
                 {leftTitleVisible ? (
                   <span className="flex">
                     {"Features".split('').map((char, index) => (
@@ -281,7 +307,7 @@ export default function Home() {
                               feature.emoji
                             )}
                           </span>
-                          <p className="text-sm text-gray-800 leading-relaxed font-semibold tracking-wide feature-text feature-highlight flex-1">
+                          <p className="text-sm text-gray-200 leading-relaxed font-semibold tracking-wide feature-text feature-highlight flex-1">
                             {isDestroying ? (
                               <span className="inline-block">
                                 {feature.text.split('').map((char, charIndex) => {
@@ -317,7 +343,7 @@ export default function Home() {
 
           {/* Center Section - Rotating Images */}
           <div 
-            className="text-center relative overflow-hidden rounded-2xl min-h-[500px] col-span-2"
+            className="text-center relative overflow-hidden rounded-2xl min-h-[500px] col-span-6"
           style={{
             backgroundImage: 'url("https://cdn-public.notjustanalytics.com/homepage/background.webp")',
             backgroundSize: 'cover',
@@ -331,7 +357,7 @@ export default function Home() {
             </h2>
           <div 
             ref={focusRef}
-            className="relative z-10 py-16 px-8 "
+            className="relative z-10 pt-16 px-8 "
             style={{
               backgroundSize: 'cover',
               backgroundPosition: 'center',
@@ -389,17 +415,51 @@ export default function Home() {
           </div>
             <Link
             href="/instagram-auth"
-            className="inline-flex items-center px-8 py-4 mb-5 bg-black from-blue-600 to-indigo-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+            className="inline-flex items-center px-8 py-4  bg-gradient-to-r from-gray-800/90 to-gray-700/90 text-white font-semibold rounded-xl hover:from-gray-700/90 hover:to-gray-600/90 transition-all duration-200 shadow-2xl hover:shadow-2xl transform hover:-translate-y-0.5 border border-gray-600/50 backdrop-blur-sm relative overflow-hidden"
           >
-            Start Analyze
-            <ChevronRightIcon className="ml-2 h-5 w-5" />
+            <div className="absolute inset-0 bg-gradient-to-r from-gray-400/10 to-gray-500/5 rounded-xl"></div>
+            <div className="absolute top-1 right-2 w-8 h-8 bg-gray-400/20 rounded-full blur-lg"></div>
+            <div className="absolute bottom-1 left-2 w-6 h-6 bg-gray-300/15 rounded-full blur-md"></div>
+            <span className="relative z-10">Start Analyze</span>
+            <ChevronRightIcon className="ml-2 h-5 w-5 relative z-10" />
           </Link>
+          
+          {/* App Store and Play Store Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-6 mb-6">
+            <button className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-gray-800/90 to-gray-700/90 text-white font-medium rounded-xl hover:from-gray-700/90 hover:to-gray-600/90 transition-all duration-200 shadow-2xl hover:shadow-2xl border border-gray-600/50 backdrop-blur-sm relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-gray-400/10 to-gray-500/5 rounded-xl"></div>
+              <div className="absolute top-1 right-1 w-6 h-6 bg-gray-400/20 rounded-full blur-md"></div>
+              <div className="absolute bottom-1 left-1 w-4 h-4 bg-gray-300/15 rounded-full blur-sm"></div>
+              <div className="flex items-center space-x-2 relative z-10">
+                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="black">
+                  <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.96-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.03-3.11z"/>
+                </svg>
+                <div className="text-left">
+                  <div className="text-xs">Download on the</div>
+                  <div className="text-sm font-semibold">App Store</div>
+                </div>
+              </div>
+            </button>
+            
+            <button className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-gray-800/90 to-gray-700/90 text-white font-medium rounded-xl hover:from-gray-700/90 hover:to-gray-600/90 transition-all duration-200 shadow-2xl hover:shadow-2xl border border-gray-600/50 backdrop-blur-sm relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-gray-400/10 to-gray-500/5 rounded-xl"></div>
+              <div className="absolute top-1 right-1 w-6 h-6 bg-gray-400/20 rounded-full blur-md"></div>
+              <div className="absolute bottom-1 left-1 w-4 h-4 bg-gray-300/15 rounded-full blur-sm"></div>
+              <div className="flex items-center space-x-2 relative z-10">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" focusable="false" role="img"><title></title><path fill="#EA4335" d="M11.278 11.462 1.185 22.006A2.725 2.725 0 0 0 3.818 24c.504 0 .978-.134 1.383-.37l.032-.018 11.362-6.452z"></path><path fill="#FBBC04" d="m21.489 9.667-.01-.007-4.905-2.8-5.526 4.841 5.547 5.46 4.877-2.774a2.676 2.676 0 0 0 1.437-2.365c0-1.017-.573-1.9-1.42-2.355"></path><path fill="#4285F4" d="M1.184 1.994c-.061.22-.093.45-.093.69v18.632c.01.267.033.47.094.69l10.44-10.275z"></path><path fill="#34A853" d="m11.352 12 5.222-5.14L5.228.385A2.764 2.764 0 0 0 3.818 0a2.72 2.72 0 0 0-2.634 1.99l-.001.003z"></path></svg>
+                <div className="text-left">
+                  <div className="text-xs">GET IT ON</div>
+                  <div className="text-sm font-semibold">Google Play</div>
+                </div>
+              </div>
+            </button>
+          </div>
           </div>
 
           {/* Right Grid Section */}
-          <div className="text-center relative rounded-2xl min-h-[250px] bg-transparent col-span-1">
-            <div className="py-16 px-8">
-              <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-6 flex justify-center">
+          <div className="text-center relative rounded-2xl min-h-[250px] bg-transparent col-span-3 ml-2">
+            <div className="py-16 px-4">
+              <h3 className="text-xl md:text-2xl font-bold text-white mb-6 flex justify-center">
                 {rightTitleVisible ? (
                   <span className="flex">
                     {"Benefits".split('').map((char, index) => (
@@ -448,7 +508,7 @@ export default function Home() {
                               feature.emoji
                             )}
                           </span>
-                          <p className="text-sm text-gray-800 leading-relaxed font-semibold tracking-wide feature-text feature-highlight flex-1">
+                          <p className="text-sm text-gray-200 leading-relaxed font-semibold tracking-wide feature-text feature-highlight flex-1">
                             {isDestroying ? (
                               <span className="inline-block">
                                 {feature.text.split('').map((char, charIndex) => {
@@ -484,12 +544,16 @@ export default function Home() {
         </div>
 
         {/* Track People Section */}
-        <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12 max-w-4xl mx-auto">
-          <div className="text-center">
-            <h3 className="text-3xl font-bold text-gray-900 mb-6">
+        <div className="bg-gradient-to-br from-gray-800/90 via-gray-700/80 to-gray-900/90 rounded-2xl shadow-2xl p-8 md:p-12 max-w-4xl mx-auto border border-gray-600/50 backdrop-blur-sm relative overflow-hidden">
+          {/* Subtle ink effect overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-400/10 via-transparent to-gray-500/5 rounded-2xl"></div>
+          <div className="absolute top-4 right-4 w-32 h-32 bg-gray-400/20 rounded-full blur-2xl"></div>
+          <div className="absolute bottom-4 left-4 w-24 h-24 bg-gray-300/15 rounded-full blur-xl"></div>
+          <div className="text-center relative z-10">
+            <h3 className="text-3xl font-bold text-white mb-6">
               Track People on Instagram
             </h3>
-            <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-200 mb-8 max-w-2xl mx-auto">
               Analyze Instagram profiles, followers, and insights with just one click. 
               Get detailed analytics about engagement, growth patterns, and audience demographics.
             </p>
@@ -497,9 +561,12 @@ export default function Home() {
        
           <Link
             href="/instructions"
-            className="inline-flex items-center px-6 py-3 bg-black text-white font-medium rounded-xl hover:bg-gray-800 transition-all duration-200"
+            className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-gray-800/90 to-gray-700/90 text-white font-medium rounded-xl hover:from-gray-700/90 hover:to-gray-600/90 transition-all duration-200 shadow-2xl hover:shadow-2xl border border-gray-600/50 backdrop-blur-sm relative overflow-hidden"
           >
-            How it works?
+            <div className="absolute inset-0 bg-gradient-to-r from-gray-400/10 to-gray-500/5 rounded-xl"></div>
+            <div className="absolute top-1 right-1 w-6 h-6 bg-gray-400/20 rounded-full blur-md"></div>
+            <div className="absolute bottom-1 left-1 w-4 h-4 bg-gray-300/15 rounded-full blur-sm"></div>
+            <span className="relative z-10">How it works?</span>
           </Link>
         </div>
           </div>
@@ -513,8 +580,8 @@ export default function Home() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
               </svg>
             </div>
-            <h4 className="text-xl font-semibold text-gray-900 mb-2">Analytics</h4>
-            <p className="text-gray-600">Comprehensive insights into follower growth and engagement patterns</p>
+            <h4 className="text-xl font-semibold text-white-900 mb-2">Analytics</h4>
+            <p className="text-white-600">Comprehensive insights into follower growth and engagement patterns</p>
           </div>
           
           <div className="text-center p-6">
@@ -523,8 +590,8 @@ export default function Home() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
             </div>
-            <h4 className="text-xl font-semibold text-gray-900 mb-2">Real-time</h4>
-            <p className="text-gray-600">Get instant updates on profile changes and activity</p>
+            <h4 className="text-xl font-semibold text-white-900 mb-2">Real-time</h4>
+            <p className="text-white-600">Get instant updates on profile changes and activity</p>
           </div>
           
           <div className="text-center p-6">
@@ -533,33 +600,33 @@ export default function Home() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
               </svg>
             </div>
-            <h4 className="text-xl font-semibold text-gray-900 mb-2">Secure</h4>
-            <p className="text-gray-600">Your data is protected with enterprise-grade security</p>
+            <h4 className="text-xl font-semibold text-white-900 mb-2">Secure</h4>
+            <p className="text-white-600">Your data is protected with enterprise-grade security</p>
           </div>
         </div>
       </main>
 
       {/* Sponsors Section */}
-      <section className="bg-white py-8 overflow-hidden border-t border-gray-100">
+      <section className="bg-black/50 backdrop-blur-sm py-8 overflow-hidden border-t border-gray-800/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Scrolling Animation Container */}
           <div className="relative">
             <div className="flex animate-scroll space-x-12 items-center opacity-70">
               {/* First set of media logos */}
               <div className="flex items-center justify-center flex-shrink-0">
-                <div className="text-gray-600 font-serif text-lg tracking-wide">
+                <div className="text-gray-300 font-serif text-lg tracking-wide">
                   Rolling Stone
                 </div>
               </div>
               
               <div className="flex items-center justify-center flex-shrink-0">
-                <div className="text-gray-600 font-bold text-lg">
+                <div className="text-gray-300 font-bold text-lg">
                   LA STAMPA
                 </div>
               </div>
               
               <div className="flex items-center justify-center flex-shrink-0">
-                <div className="text-gray-600 font-bold text-lg tracking-wider">
+                <div className="text-gray-300 font-bold text-lg tracking-wider">
                   WIRED
                 </div>
               </div>
@@ -571,14 +638,14 @@ export default function Home() {
               </div>
               
               <div className="flex items-center justify-center flex-shrink-0">
-                <div className="text-gray-600 font-serif text-sm leading-tight">
+                <div className="text-gray-300 font-serif text-sm leading-tight">
                   CORRIERE<br />DELLA SERA
                 </div>
               </div>
               
               <div className="flex items-center justify-center flex-shrink-0">
-                <div className="w-12 h-12 border-2 border-gray-600 rounded-full flex items-center justify-center">
-                  <div className="text-gray-600 font-bold text-xs leading-tight">
+                <div className="w-12 h-12 border-2 border-gray-400 rounded-full flex items-center justify-center">
+                  <div className="text-gray-300 font-bold text-xs leading-tight">
                     DEE<br />JAY
                   </div>
                 </div>
@@ -591,34 +658,34 @@ export default function Home() {
               </div>
               
               <div className="flex items-center justify-center flex-shrink-0">
-                <div className="w-12 h-12 border-2 border-gray-600 rounded-full flex items-center justify-center">
-                  <div className="text-gray-600 font-bold text-xs">
+                <div className="w-12 h-12 border-2 border-gray-400 rounded-full flex items-center justify-center">
+                  <div className="text-gray-300 font-bold text-xs">
                     LEIENE
                   </div>
                 </div>
               </div>
               
               <div className="flex items-center justify-center flex-shrink-0">
-                <div className="text-gray-600 font-serif text-sm">
+                <div className="text-gray-300 font-serif text-sm">
                   la Repubblica
                 </div>
               </div>
               
               {/* Duplicate set for seamless loop */}
               <div className="flex items-center justify-center flex-shrink-0">
-                <div className="text-gray-600 font-serif text-lg tracking-wide">
+                <div className="text-gray-300 font-serif text-lg tracking-wide">
                   Rolling Stone
                 </div>
               </div>
               
               <div className="flex items-center justify-center flex-shrink-0">
-                <div className="text-gray-600 font-bold text-lg">
+                <div className="text-gray-300 font-bold text-lg">
                   LA STAMPA
                 </div>
               </div>
               
               <div className="flex items-center justify-center flex-shrink-0">
-                <div className="text-gray-600 font-bold text-lg tracking-wider">
+                <div className="text-gray-300 font-bold text-lg tracking-wider">
                   WIRED
                 </div>
               </div>
@@ -630,14 +697,14 @@ export default function Home() {
               </div>
               
               <div className="flex items-center justify-center flex-shrink-0">
-                <div className="text-gray-600 font-serif text-sm leading-tight">
+                <div className="text-gray-300 font-serif text-sm leading-tight">
                   CORRIERE<br />DELLA SERA
                 </div>
               </div>
               
               <div className="flex items-center justify-center flex-shrink-0">
-                <div className="w-12 h-12 border-2 border-gray-600 rounded-full flex items-center justify-center">
-                  <div className="text-gray-600 font-bold text-xs leading-tight">
+                <div className="w-12 h-12 border-2 border-gray-400 rounded-full flex items-center justify-center">
+                  <div className="text-gray-300 font-bold text-xs leading-tight">
                     DEE<br />JAY
                   </div>
                 </div>
@@ -650,15 +717,15 @@ export default function Home() {
               </div>
               
               <div className="flex items-center justify-center flex-shrink-0">
-                <div className="w-12 h-12 border-2 border-gray-600 rounded-full flex items-center justify-center">
-                  <div className="text-gray-600 font-bold text-xs">
+                <div className="w-12 h-12 border-2 border-gray-400 rounded-full flex items-center justify-center">
+                  <div className="text-gray-300 font-bold text-xs">
                     LEIENE
                   </div>
                 </div>
               </div>
               
               <div className="flex items-center justify-center flex-shrink-0">
-                <div className="text-gray-600 font-serif text-sm">
+                <div className="text-gray-300 font-serif text-sm">
                   la Repubblica
                 </div>
               </div>
