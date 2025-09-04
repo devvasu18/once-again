@@ -244,4 +244,17 @@ body {
       transform: translateY(-25px) translateX(5px) rotate(270deg);
     }
   }
+  
+  .animate-scroll-reviews {
+    animation: scroll-reviews 20s linear infinite;
+  }
+  
+  @keyframes scroll-reviews {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
 }
