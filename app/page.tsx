@@ -80,6 +80,27 @@ export default function Home() {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
   const [lastSubmittedReview, setLastSubmittedReview] = useState<{name: string, review: string} | null>(null)
   const [pauseAnimation, setPauseAnimation] = useState(false)
+  const [isLoadingReviews, setIsLoadingReviews] = useState(true)
+  const [showTransition, setShowTransition] = useState(false)
+
+  // Static dummy reviews for initial display
+  const dummyReviews = [
+    { name: "Sarah Johnson", rating: 5, review: "This tool is absolutely amazing! I can track my Instagram analytics in real-time and the insights are incredibly detailed. Highly recommended!" },
+    { name: "Mike Chen", rating: 4, review: "Great tool for understanding my audience better. The follower tracking feature is particularly useful for my business." },
+    { name: "Emily Rodriguez", rating: 5, review: "The security features give me peace of mind. I know my data is safe and private while getting valuable insights." },
+    { name: "Alex Thompson", rating: 5, review: "Best Instagram analytics tool I've used. The real-time updates are incredibly accurate and help me make better content decisions." },
+    { name: "Lisa Wang", rating: 4, review: "Amazing tool! The insights have helped me optimize my content strategy significantly. My engagement rates have improved a lot." },
+    { name: "David Kim", rating: 5, review: "User-friendly interface and powerful features. Highly recommend for anyone serious about Instagram growth and analytics." },
+    { name: "Maria Garcia", rating: 4, review: "Love how easy it is to use. The dashboard is clean and I can quickly see what's working for my account." },
+    { name: "James Wilson", rating: 5, review: "Incredible tool! The follower growth tracking has helped me understand my audience better than ever before." },
+    { name: "Anna Smith", rating: 4, review: "Perfect for content creators. The analytics help me post at the right times and create content that resonates." },
+    { name: "Tom Brown", rating: 5, review: "Outstanding platform! The detailed metrics and real-time tracking have transformed how I approach Instagram marketing." },
+    { name: "Jessica Lee", rating: 4, review: "Really impressed with the accuracy of the data. It's helped me identify my best-performing content and replicate success." },
+    { name: "Chris Davis", rating: 5, review: "Game-changer for my business! The insights are actionable and have directly improved my Instagram strategy." },
+    { name: "Rachel Green", rating: 4, review: "Love the interface design and how intuitive everything is. Makes analytics fun instead of overwhelming." },
+    { name: "Mark Taylor", rating: 5, review: "Exceptional tool! The real-time monitoring and detailed reports have been invaluable for my social media strategy." },
+    { name: "Amanda White", rating: 4, review: "Fantastic platform! The user experience is smooth and the data insights are exactly what I needed for growth." }
+  ]
 
   // Fetch reviews from database
   const fetchReviews = async () => {
@@ -89,16 +110,19 @@ export default function Home() {
         const data = await response.json()
         const reviewsData = data.reviews || []
         
+        // Shuffle reviews to randomize order
+        const shuffledReviews = reviewsData.sort(() => Math.random() - 0.5)
+        
         // If user just submitted a review, center it
         if (lastSubmittedReview) {
-          const userReview = reviewsData.find((review: any) => 
+          const userReview = shuffledReviews.find((review: any) => 
             review.name === lastSubmittedReview.name && 
             review.review === lastSubmittedReview.review
           )
           
           if (userReview) {
             // Remove user review from its current position
-            const otherReviews = reviewsData.filter((review: any) => 
+            const otherReviews = shuffledReviews.filter((review: any) => 
               !(review.name === lastSubmittedReview.name && 
                 review.review === lastSubmittedReview.review)
             )
@@ -124,10 +148,22 @@ export default function Home() {
           }
         }
         
-        setReviews(reviewsData)
+        // Start transition to real reviews
+        setShowTransition(true)
+        
+        // After a short delay, switch to real reviews
+        setTimeout(() => {
+          setReviews(shuffledReviews)
+          setIsLoadingReviews(false)
+          // Keep transition state for fade-in effect
+          setTimeout(() => {
+            setShowTransition(false)
+          }, 500)
+        }, 1000)
       }
     } catch (error) {
       console.error('Error fetching reviews:', error)
+      setIsLoadingReviews(false)
     }
   }
 
@@ -141,6 +177,13 @@ export default function Home() {
   useEffect(() => {
     fetchReviews()
     checkReviewStatus()
+    
+    // Set loading to false after 3 seconds to show dummy reviews
+    const timer = setTimeout(() => {
+      setIsLoadingReviews(false)
+    }, 3000)
+    
+    return () => clearTimeout(timer)
   }, [])
 
   // Handle review submission
@@ -150,8 +193,8 @@ export default function Home() {
       return
     }
 
-    if (reviewText.length > 100) {
-      alert('Review must be 100 characters or less.')
+    if (reviewText.length > 80) {
+      alert('Review must be 80 characters or less.')
       return
     }
 
@@ -486,15 +529,13 @@ export default function Home() {
 
           {/* Reviews Carousel */}
           <div className="relative overflow-hidden mb-8">
-            {pauseAnimation && (
-              <div className="absolute top-2 right-2 z-20 bg-green-500/20 text-green-300 text-xs px-2 py-1 rounded-full border border-green-500/30 backdrop-blur-sm">
-                ✨ Your review is highlighted
-              </div>
-            )}
-            <div className={`flex space-x-6 ${pauseAnimation ? '' : 'animate-scroll-reviews'}`}>
-              {/* Real Review Cards */}
-              {reviews.length > 0 ? (
-                reviews.map((review, index) => {
+            {isLoadingReviews }
+            {showTransition}
+            
+            <div className={`flex space-x-6 ${pauseAnimation ? '' : 'animate-scroll-reviews'} transition-opacity duration-1000 ${showTransition ? 'opacity-50' : 'opacity-100'}`}>
+              {/* Review Cards */}
+              {(isLoadingReviews ? dummyReviews : reviews).length > 0 ? (
+                (isLoadingReviews ? dummyReviews : reviews).map((review, index) => {
                   const colors = [
                     'from-blue-500 to-purple-600',
                     'from-green-500 to-teal-600',
@@ -514,7 +555,7 @@ export default function Home() {
                   return (
                     <div 
                       key={review._id || index} 
-                      className={`flex-shrink-0 w-80 bg-gradient-to-br from-gray-700/50 to-gray-800/50 rounded-xl p-6 border border-gray-600/30 backdrop-blur-sm ${
+                      className={`flex-shrink-0 w-80 h-48 bg-gradient-to-br from-gray-700/50 to-gray-800/50 rounded-xl p-6 border border-gray-600/30 backdrop-blur-sm flex flex-col ${
                         isUserReview ? 'ring-2 ring-green-400/50 shadow-lg shadow-green-400/20 transform scale-105' : ''
                       }`}
                     >
@@ -529,17 +570,19 @@ export default function Home() {
                           </div>
                         </div>
                       </div>
-                      <p className="text-gray-200 text-sm leading-relaxed">
-                        "{review.review}"
-                      </p>
-                      {isUserReview && (
-                        <div className="mt-3 text-xs text-green-400 font-medium flex items-center">
-                          <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                          </svg>
-                          Your review
-                        </div>
-                      )}
+                      <div className="flex-1 flex flex-col justify-between">
+                        <p className="text-gray-200 text-sm leading-relaxed line-clamp-3">
+                          "{review.review}"
+                        </p>
+                        {isUserReview && (
+                          <div className="mt-3 text-xs text-green-400 font-medium flex items-center">
+                            <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                            </svg>
+                            Your review
+                          </div>
+                        )}
+                      </div>
                     </div>
                   )
                 })
@@ -771,18 +814,18 @@ export default function Home() {
 
             {/* Review Text */}
             <div className="mb-6">
-              <label className="block text-white font-medium mb-2">Your Review (100 characters max)</label>
+              <label className="block text-white font-medium mb-2">Your Review (80 characters max)</label>
               <textarea
                 value={reviewText}
                 onChange={(e) => setReviewText(e.target.value)}
                 placeholder="Share your experience with us..."
-                rows={4}
-                maxLength={100}
+                rows={2}
+                maxLength={80}
                 className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-transparent resize-none"
                 required
               />
               <div className="text-right text-sm text-gray-400 mt-1">
-                {reviewText.length}/100 characters
+                {reviewText.length}/80 characters
               </div>
             </div>
 
