@@ -252,8 +252,8 @@ export default function Home() {
                   "Features"
                 )}
               </h3>
-              <div className="relative h-96 overflow-hidden">
-                <div className="space-y-4">
+              <div className="relative h-[28rem] overflow-hidden">
+                <div className="space-y-6">
                   {allFeatures.slice(leftCurrentGroup * 5, (leftCurrentGroup * 5) + 5).map((feature, index) => {
                     const isVisible = index <= leftCurrentLine
                     const isDestroying = leftIsDestroying && isVisible
@@ -419,8 +419,8 @@ export default function Home() {
                   "Benefits"
                 )}
               </h3>
-              <div className="relative h-96 overflow-hidden">
-                <div className="space-y-4">
+              <div className="relative h-[28rem] overflow-hidden">
+                <div className="space-y-6">
                   {allFeatures.slice(24 + rightCurrentGroup * 5, 24 + (rightCurrentGroup * 5) + 5).map((feature, index) => {
                     const isVisible = index <= rightCurrentLine
                     const isDestroying = rightIsDestroying && isVisible
