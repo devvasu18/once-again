@@ -78,6 +78,8 @@ export default function Home() {
   const [reviews, setReviews] = useState([])
   const [hasSubmittedReview, setHasSubmittedReview] = useState(false)
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
+  const [lastSubmittedReview, setLastSubmittedReview] = useState<{name: string, review: string} | null>(null)
+  const [pauseAnimation, setPauseAnimation] = useState(false)
 
   // Fetch reviews from database
   const fetchReviews = async () => {
@@ -85,7 +87,44 @@ export default function Home() {
       const response = await fetch('/api/reviews')
       if (response.ok) {
         const data = await response.json()
-        setReviews(data.reviews || [])
+        const reviewsData = data.reviews || []
+        
+        // If user just submitted a review, center it
+        if (lastSubmittedReview) {
+          const userReview = reviewsData.find((review: any) => 
+            review.name === lastSubmittedReview.name && 
+            review.review === lastSubmittedReview.review
+          )
+          
+          if (userReview) {
+            // Remove user review from its current position
+            const otherReviews = reviewsData.filter((review: any) => 
+              !(review.name === lastSubmittedReview.name && 
+                review.review === lastSubmittedReview.review)
+            )
+            
+            // Calculate center position
+            const centerIndex = Math.floor(otherReviews.length / 2)
+            
+            // Insert user review in center
+            const centeredReviews = [
+              ...otherReviews.slice(0, centerIndex),
+              userReview,
+              ...otherReviews.slice(centerIndex)
+            ]
+            
+            setReviews(centeredReviews)
+            
+            // Pause animation for 5 seconds to show user's review in center
+            setPauseAnimation(true)
+            setTimeout(() => {
+              setPauseAnimation(false)
+            }, 5000)
+            return
+          }
+        }
+        
+        setReviews(reviewsData)
       }
     } catch (error) {
       console.error('Error fetching reviews:', error)
@@ -135,6 +174,9 @@ export default function Home() {
         localStorage.setItem('instalker-review-submitted', 'true')
         setHasSubmittedReview(true)
         
+        // Store the last submitted review for highlighting
+        setLastSubmittedReview({ name: userName, review: reviewText })
+        
         // Show success message
         setShowSuccessMessage(true)
         setTimeout(() => setShowSuccessMessage(false), 3000) // Hide after 3 seconds
@@ -146,7 +188,7 @@ export default function Home() {
         
         // Refresh reviews to show the new one
         await fetchReviews()
-      } else {
+        } else {
         alert('Failed to submit review. Please try again.')
       }
     } catch (error) {
@@ -324,7 +366,7 @@ export default function Home() {
 
     <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0 0 24 24">
     <path d="M 11.5 0 C 10.119 0 9 1.119 9 2.5 L 9 4 L 5 4 C 3.895 4 3 4.895 3 6 L 3 9 C 3 9.552 3.448 10 4 10 L 4.3574219 10 C 5.6654219 10 6.8553281 10.941188 6.9863281 12.242188 C 7.1363281 13.739187 5.966 15 4.5 15 L 4 15 C 3.448 15 3 15.448 3 16 L 3 19 C 3 20.105 3.895 21 5 21 L 8 21 C 8.552 21 9 20.552 9 20 L 9 19.642578 C 9 18.334578 9.9411875 17.144672 11.242188 17.013672 C 12.739187 16.863672 14 18.034 14 19.5 L 14 20 C 14 20.552 14.448 21 15 21 L 18 21 C 19.105 21 20 20.105 20 19 L 20 15 L 21.5 15 C 22.881 15 24 13.881 24 12.5 C 24 11.119 22.881 10 21.5 10 L 20 10 L 20 6 C 20 4.895 19.105 4 18 4 L 14 4 L 14 2.5 C 14 1.119 12.881 0 11.5 0 z"></path>
-</svg>
+                </svg>
                 <div className="text-left">
                    <div className="text-sm font-semibold">get extension</div>
                 </div>
@@ -388,7 +430,7 @@ export default function Home() {
           <div className="text-center p-6 relative rounded-2xl overflow-hidden bg-gradient-to-br from-gray-800/90 via-gray-700/80 to-gray-900/90 shadow-2xl border border-gray-600/50 backdrop-blur-sm">
             <div className="absolute inset-0 bg-gradient-to-br from-gray-400/10 via-transparent to-gray-500/5 rounded-2xl"></div>
             <div className="relative z-10">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
@@ -408,7 +450,7 @@ export default function Home() {
           <div className="text-center p-6 relative rounded-2xl overflow-hidden bg-gradient-to-br from-gray-800/90 via-gray-700/80 to-gray-900/90 shadow-2xl border border-gray-600/50 backdrop-blur-sm">
             <div className="absolute inset-0 bg-gradient-to-br from-gray-400/10 via-transparent to-gray-500/5 rounded-2xl"></div>
             <div className="relative z-10">
-              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <svg className="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
               </svg>
@@ -444,7 +486,12 @@ export default function Home() {
 
           {/* Reviews Carousel */}
           <div className="relative overflow-hidden mb-8">
-            <div className="flex animate-scroll-reviews space-x-6">
+            {pauseAnimation && (
+              <div className="absolute top-2 right-2 z-20 bg-green-500/20 text-green-300 text-xs px-2 py-1 rounded-full border border-green-500/30 backdrop-blur-sm">
+                ✨ Your review is highlighted
+              </div>
+            )}
+            <div className={`flex space-x-6 ${pauseAnimation ? '' : 'animate-scroll-reviews'}`}>
               {/* Real Review Cards */}
               {reviews.length > 0 ? (
                 reviews.map((review, index) => {
@@ -460,9 +507,17 @@ export default function Home() {
                   ]
                   const colorClass = colors[index % colors.length]
                   const firstLetter = review.name ? review.name.charAt(0).toUpperCase() : 'U'
+                  const isUserReview = lastSubmittedReview && 
+                    review.name === lastSubmittedReview.name && 
+                    review.review === lastSubmittedReview.review
                   
                   return (
-                    <div key={review._id || index} className="flex-shrink-0 w-80 bg-gradient-to-br from-gray-700/50 to-gray-800/50 rounded-xl p-6 border border-gray-600/30 backdrop-blur-sm">
+                    <div 
+                      key={review._id || index} 
+                      className={`flex-shrink-0 w-80 bg-gradient-to-br from-gray-700/50 to-gray-800/50 rounded-xl p-6 border border-gray-600/30 backdrop-blur-sm ${
+                        isUserReview ? 'ring-2 ring-green-400/50 shadow-lg shadow-green-400/20 transform scale-105' : ''
+                      }`}
+                    >
                       <div className="flex items-center mb-4">
                         <div className={`w-12 h-12 bg-gradient-to-r ${colorClass} rounded-full flex items-center justify-center text-white font-bold text-lg`}>
                           {firstLetter}
@@ -477,63 +532,22 @@ export default function Home() {
                       <p className="text-gray-200 text-sm leading-relaxed">
                         "{review.review}"
                       </p>
+                      {isUserReview && (
+                        <div className="mt-3 text-xs text-green-400 font-medium flex items-center">
+                          <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                          </svg>
+                          Your review
+                        </div>
+                      )}
                     </div>
                   )
                 })
               ) : (
-                // Fallback dummy reviews when no real reviews exist
-                <>
-                  <div className="flex-shrink-0 w-80 bg-gradient-to-br from-gray-700/50 to-gray-800/50 rounded-xl p-6 border border-gray-600/30 backdrop-blur-sm">
-                    <div className="flex items-center mb-4">
-                      <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
-                        A
-                      </div>
-                      <div className="ml-4">
-                        <h4 className="text-white font-semibold">Alex Johnson</h4>
-                        <div className="flex text-yellow-400">
-                          {'★'.repeat(5)}
-                        </div>
-                      </div>
-                    </div>
-                    <p className="text-gray-200 text-sm leading-relaxed">
-                      "This tool is absolutely amazing! I can track my Instagram analytics in real-time and the insights are incredibly detailed. Highly recommended!"
-                    </p>
-                  </div>
-
-                  <div className="flex-shrink-0 w-80 bg-gradient-to-br from-gray-700/50 to-gray-800/50 rounded-xl p-6 border border-gray-600/30 backdrop-blur-sm">
-                    <div className="flex items-center mb-4">
-                      <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-teal-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
-                        S
-                      </div>
-                      <div className="ml-4">
-                        <h4 className="text-white font-semibold">Sarah Wilson</h4>
-                        <div className="flex text-yellow-400">
-                          {'★'.repeat(5)}
-                        </div>
-                      </div>
-                    </div>
-                    <p className="text-gray-200 text-sm leading-relaxed">
-                      "The best Instagram analytics tool I've ever used. The interface is clean and the data is always accurate. Love it!"
-                    </p>
-                  </div>
-
-                  <div className="flex-shrink-0 w-80 bg-gradient-to-br from-gray-700/50 to-gray-800/50 rounded-xl p-6 border border-gray-600/30 backdrop-blur-sm">
-                    <div className="flex items-center mb-4">
-                      <div className="w-12 h-12 bg-gradient-to-r from-pink-500 to-rose-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
-                        M
-                      </div>
-                      <div className="ml-4">
-                        <h4 className="text-white font-semibold">Mike Chen</h4>
-                        <div className="flex text-yellow-400">
-                          {'★'.repeat(4)}
-                        </div>
-                      </div>
-                    </div>
-                    <p className="text-gray-200 text-sm leading-relaxed">
-                      "Great tool for understanding my audience better. The follower tracking feature is particularly useful for my business."
-                    </p>
-                  </div>
-                </>
+                <div className="text-center py-12 w-full">
+                  <div className="text-gray-400 text-lg mb-4">No reviews yet</div>
+                  <p className="text-gray-500 text-sm">Be the first to share your experience!</p>
+                </div>
               )}
             </div>
           </div>
