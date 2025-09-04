@@ -223,9 +223,22 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-r from-gray-400/10 to-gray-500/5 rounded-xl"></div>
               <div className="absolute top-1 right-1 w-6 h-6 bg-gray-400/20 rounded-full blur-md"></div>
               <div className="absolute bottom-1 left-1 w-4 h-4 bg-gray-300/15 rounded-full blur-sm"></div>
-              <div className="flex items-center space-x-2 relative z-10">              
-                <div className="text-left">                
-                  <div className="text-sm font-semibold">get extension</div>
+              <div className="flex items-center space-x-2 relative z-10">
+                 <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
+                   {/* Blue shape - top horizontal bar with curved bottom */}
+                   <path d="M2 2h14v4H8c-1.1 0-2-.9-2-2V2z M8 6h8v2H8V6z" fill="#3B82F6"/>
+                   
+                   {/* Green shape - left side with large curved cutout */}
+                   <path d="M2 8h6c1.1 0 2 .9 2 2v2H2V8z M2 12h8v8H2v-8z M4 10c0-1.1.9-2 2-2s2 .9 2 2v4c0 1.1-.9 2-2 2s-2-.9-2-2v-4z" fill="#10B981"/>
+                   
+                   {/* Red shape - right side with rounded protrusion */}
+                   <path d="M16 2h6v4h-4c-1.1 0-2-.9-2-2V2z M18 6h4v4h-4V6z M20 10c0 1.1.9 2 2 2v-2h-2z M16 10h4v8h-4v-8z" fill="#EF4444"/>
+                   
+                   {/* Yellow shape - bottom L-shape */}
+                   <path d="M8 16h8v2H8v-2z M8 18h6v4H8v-4z" fill="#F59E0B"/>
+                </svg>
+                <div className="text-left">
+                   <div className="text-sm font-semibold">get extension</div>
                 </div>
               </div>
             </button>
@@ -276,7 +289,9 @@ export default function Home() {
 
         {/* Features Section */}
         <div className="mt-20 grid md:grid-cols-3 gap-8">
-          <div className="text-center p-6">
+          <div className="text-center p-6 relative rounded-2xl overflow-hidden bg-gradient-to-br from-gray-800/90 via-gray-700/80 to-gray-900/90 shadow-2xl border border-gray-600/50 backdrop-blur-sm">
+            <div className="absolute inset-0 bg-gradient-to-br from-gray-400/10 via-transparent to-gray-500/5 rounded-2xl"></div>
+            <div className="relative z-10">
             <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
@@ -291,43 +306,47 @@ export default function Home() {
               <li>• Best posting times</li>
               <li>• Hashtag effectiveness</li>
             </ul>
-           
+            </div>
           </div>
           
-          <div className="text-center p-6">
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="text-center p-6 relative rounded-2xl overflow-hidden bg-gradient-to-br from-gray-800/90 via-gray-700/80 to-gray-900/90 shadow-2xl border border-gray-600/50 backdrop-blur-sm">
+            <div className="absolute inset-0 bg-gradient-to-br from-gray-400/10 via-transparent to-gray-500/5 rounded-2xl"></div>
+            <div className="relative z-10">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
             </div>
             <h4 className="text-xl font-semibold text-white-900 mb-2">Real-time</h4>
-            <ul className="text-sm text-gray-300 space-y-1 text-center">
-              <li>• Live follower updates</li>
-              <li>• Instant notifications</li>
-              <li>• Real-time story views</li>
-              <li>• Immediate data refresh</li>
-              <li>• Live engagement tracking</li>
-              <li>• Up-to-the-minute insights</li>
-            </ul>
-          
+              <ul className="text-sm text-gray-300 space-y-1 text-center">
+                <li>• Live follower updates</li>
+                <li>• Instant notifications</li>
+                <li>• Real-time story views</li>
+                <li>• Immediate data refresh</li>
+                <li>• Live engagement tracking</li>
+                <li>• Up-to-the-minute insights</li>
+              </ul>
+            </div>
           </div>
           
-          <div className="text-center p-6">
-            <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="text-center p-6 relative rounded-2xl overflow-hidden bg-gradient-to-br from-gray-800/90 via-gray-700/80 to-gray-900/90 shadow-2xl border border-gray-600/50 backdrop-blur-sm">
+            <div className="absolute inset-0 bg-gradient-to-br from-gray-400/10 via-transparent to-gray-500/5 rounded-2xl"></div>
+            <div className="relative z-10">
+              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <svg className="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
               </svg>
             </div>
             <h4 className="text-xl font-semibold text-white-900 mb-2">Secure</h4>
-            <ul className="text-sm text-gray-300 space-y-1 text-center">
-              <li>• End-to-end encryption</li>
-              <li>• No password storage</li>
-              <li>• Privacy protection</li>
-              <li>• Secure data handling</li>
-              <li>• GDPR compliant</li>
-              <li>• Enterprise-grade security</li>
-            </ul>
-         
+              <ul className="text-sm text-gray-300 space-y-1 text-center">
+                <li>• End-to-end encryption</li>
+                <li>• No password storage</li>
+                <li>• Privacy protection</li>
+                <li>• Secure data handling</li>
+                <li>• GDPR compliant</li>
+                <li>• Enterprise-grade security</li>
+              </ul>
+            </div>
           </div>
         </div>
       </main>
