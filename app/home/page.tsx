@@ -949,6 +949,23 @@ export default function HomePage() {
         </div>
       </div>
 
+      {/* Footer */}
+      <footer 
+        className="border-t border-gray-200 relative mt-8"
+        style={{
+          backgroundImage: 'url(https://cdn-public.notjustanalytics.com/homepage/background.webp)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="text-center text-white">
+            <p>&copy; 2024 Instalker . All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
+
       {/* Story Viewer Modal */}
       {isStoryOpen && (
         <div className="fixed inset-0 z-50 bg-black flex items-center justify-center">

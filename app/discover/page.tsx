@@ -277,7 +277,6 @@ export default function DiscoverPage() {
               key={profile.id} 
               className="rounded-2xl shadow-sm p-6 hover:shadow-md transition-shadow relative overflow-hidden cursor-pointer"
               style={{
-                backgroundImage: 'url("https://cdn-public.notjustanalytics.com/homepage/background.webp")',
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat'
@@ -285,6 +284,24 @@ export default function DiscoverPage() {
               onClick={() => handleProfileClick(profile)}
             >
               <div className="absolute inset-0 "></div>
+              
+              {/* Floating Colorful Wrappers */}
+              <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                {/* Top Row */}
+                <div className="absolute top-4 left-4 w-6 h-6 bg-cyan-400 rounded-full animate-float opacity-50"></div>               
+                <div className="absolute top-6 left-1/2 w-5 h-5 bg-pink-400 rounded-full animate-float-delayed opacity-40"></div>
+                
+                {/* Middle Row */}
+                <div className="absolute top-1/3 left-6 w-8 h-8 bg-fuchsia-400 rounded-full animate-float-delayed opacity-40"></div>
+                <div className="absolute top-1/2 left-1/4 w-6 h-6 bg-indigo-400 rounded-full animate-float-delayed opacity-50"></div>
+                <div className="absolute top-1/2 right-1/4 w-8 h-8 bg-rose-400 rounded-full animate-float-slow opacity-40"></div>
+                
+                {/* Bottom Row */}
+                <div className="absolute bottom-16 left-6 w-8 h-8 bg-cyan-400 rounded-full animate-float-delayed opacity-50"></div>
+                <div className="absolute bottom-12 right-8 w-6 h-6 bg-emerald-400 rounded-full animate-float-slow opacity-60"></div>              
+                <div className="absolute bottom-10 right-1/3 w-5 h-5 bg-teal-400 rounded-full animate-float opacity-60"></div>
+              </div>
+              
               <div className="relative z-10">
               <div className="flex items-center space-x-4 mb-4">
                 <div className="relative">
@@ -458,6 +475,23 @@ export default function DiscoverPage() {
           </div>
         </div>
       )}
+
+      {/* Footer */}
+      <footer 
+        className="border-t border-gray-200 relative mt-8"
+        style={{
+          backgroundImage: 'url(https://cdn-public.notjustanalytics.com/homepage/background.webp)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="text-center text-white">
+            <p>&copy; 2024 Instalker . All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }
