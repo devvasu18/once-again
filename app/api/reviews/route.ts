@@ -23,10 +23,10 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Validate review length (50 characters max)
-    if (review.length > 50) {
+    // Validate review length (100 characters max)
+    if (review.length > 100) {
       return NextResponse.json(
-        { error: 'Review must be 50 characters or less' },
+        { error: 'Review must be 100 characters or less' },
         { status: 400 }
       )
     }

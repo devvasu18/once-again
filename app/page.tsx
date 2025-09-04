@@ -77,6 +77,7 @@ export default function Home() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [reviews, setReviews] = useState([])
   const [hasSubmittedReview, setHasSubmittedReview] = useState(false)
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false)
 
   // Fetch reviews from database
   const fetchReviews = async () => {
@@ -110,8 +111,8 @@ export default function Home() {
       return
     }
 
-    if (reviewText.length > 50) {
-      alert('Review must be 50 characters or less.')
+    if (reviewText.length > 100) {
+      alert('Review must be 100 characters or less.')
       return
     }
 
@@ -134,7 +135,10 @@ export default function Home() {
         localStorage.setItem('instalker-review-submitted', 'true')
         setHasSubmittedReview(true)
         
-        alert('Thank you for your review! It has been submitted successfully.')
+        // Show success message
+        setShowSuccessMessage(true)
+        setTimeout(() => setShowSuccessMessage(false), 3000) // Hide after 3 seconds
+        
         setShowReviewModal(false)
         setReviewText('')
         setRating(0)
@@ -219,6 +223,18 @@ export default function Home() {
           </div>
         </div>
       </header>
+
+      {/* Success Message */}
+      {showSuccessMessage && (
+        <div className="relative z-30 max-w-8xl mx-auto px-4 pt-4">
+          <div className="inline-flex items-center px-4 py-2 bg-green-500/20 text-green-300 text-sm font-medium rounded-lg border border-green-500/30 backdrop-blur-sm">
+            <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
+            Review added successfully!
+          </div>
+        </div>
+      )}
 
       {/* Main Content */}
       <main className="relative z-10 max-w-8xl mx-auto py-12 px-1 sm:px-2 lg:px-4">
@@ -741,18 +757,18 @@ export default function Home() {
 
             {/* Review Text */}
             <div className="mb-6">
-              <label className="block text-white font-medium mb-2">Your Review (50 characters max)</label>
+              <label className="block text-white font-medium mb-2">Your Review (100 characters max)</label>
               <textarea
                 value={reviewText}
                 onChange={(e) => setReviewText(e.target.value)}
                 placeholder="Share your experience with us..."
                 rows={4}
-                maxLength={50}
+                maxLength={100}
                 className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-transparent resize-none"
                 required
               />
               <div className="text-right text-sm text-gray-400 mt-1">
-                {reviewText.length}/50 characters
+                {reviewText.length}/100 characters
               </div>
             </div>
 
