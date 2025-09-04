@@ -127,9 +127,27 @@ export default function Home() {
   const [rightCurrentLine, setRightCurrentLine] = useState(0)
   const [leftIsDestroying, setLeftIsDestroying] = useState(false)
   const [rightIsDestroying, setRightIsDestroying] = useState(false)
+  const [leftTitleVisible, setLeftTitleVisible] = useState(false)
+  const [rightTitleVisible, setRightTitleVisible] = useState(false)
 
   // Auto-rotate features with staggered timing - 5 points at a time
   useEffect(() => {
+    // Show titles after a short delay
+    const showTitles = () => {
+      setLeftTitleVisible(false)
+      setRightTitleVisible(false)
+      setTimeout(() => {
+        setLeftTitleVisible(true)
+        setRightTitleVisible(true)
+      }, 100)
+    }
+    
+    // Initial show
+    showTitles()
+    
+    // Repeat every 3 seconds
+    const titleInterval = setInterval(showTitles, 3000)
+
     const leftInterval = setInterval(() => {
       setLeftCurrentLine((prev) => {
         if (prev < 4) {
@@ -173,6 +191,7 @@ export default function Home() {
     return () => {
       clearInterval(leftInterval)
       clearInterval(rightInterval)
+      clearInterval(titleInterval)
     }
   }, [])
 
@@ -213,8 +232,25 @@ export default function Home() {
           {/* Left Grid Section */}
           <div className="text-center relative rounded-2xl min-h-[250px] bg-transparent col-span-1">
             <div className="py-16 px-8">
-              <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-6">
-                Features
+              <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-6 flex justify-center">
+                {leftTitleVisible ? (
+                  <span className="flex">
+                    {"Features".split('').map((char, index) => (
+                      <span
+                        key={index}
+                        className="inline-block animate-fadeInUp"
+                        style={{
+                          animationDelay: `${index * 0.1}s`,
+                          animationFillMode: 'both'
+                        }}
+                      >
+                        {char}
+                      </span>
+                    ))}
+                  </span>
+                ) : (
+                  "Features"
+                )}
               </h3>
               <div className="relative h-96 overflow-hidden">
                 <div className="space-y-4">
@@ -232,7 +268,13 @@ export default function Home() {
                         <div className="flex items-start gap-2">
                           <span>
                             {isDestroying ? (
-                              <span className="inline-block animate-letter-blast">
+                              <span 
+                                className="inline-block animate-letter-blast"
+                                style={{
+                                  '--blast-x': `${(Math.random() - 0.5) * 800}px`,
+                                  '--blast-y': `${-Math.random() * 400 - 200}px`
+                                } as React.CSSProperties}
+                              >
                                 {feature.emoji}
                               </span>
                             ) : (
@@ -243,8 +285,8 @@ export default function Home() {
                             {isDestroying ? (
                               <span className="inline-block">
                                 {feature.text.split('').map((char, charIndex) => {
-                                  const blastX = (Math.random() - 0.5) * 200
-                                  const blastY = -Math.random() * 100 - 50
+                                  const blastX = (Math.random() - 0.5) * 800
+                                  const blastY = -Math.random() * 400 - 200
                                   
                                   return (
                                     <span
@@ -284,19 +326,19 @@ export default function Home() {
             backgroundColor: '#f3f4f6'
           }}
         >
+         <h2 className="text-2xl md:text-4xl font-bold text-white mt-3">
+              Connect with Your Network
+            </h2>
           <div 
             ref={focusRef}
             className="relative z-10 py-16 px-8 "
             style={{
-              backgroundImage: 'url("https://cdn-public.notjustanalytics.com/homepage/background.webp")',
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat'
             }}
           >
-            <h2 className="text-2xl md:text-4xl font-bold text-white mb-6">
-              Connect with Your Network
-            </h2>
+           
             
             {/* Profile Images Network */}
             <div className="relative w-[250px] h-96 mx-auto mb-8" >
@@ -343,21 +385,39 @@ export default function Home() {
               </div>
             </div>
 
+           
+          </div>
             <Link
             href="/instagram-auth"
-            className="inline-flex items-center px-8 py-4 bg-black from-blue-600 to-indigo-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+            className="inline-flex items-center px-8 py-4 mb-5 bg-black from-blue-600 to-indigo-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
           >
             Start Analyze
             <ChevronRightIcon className="ml-2 h-5 w-5" />
           </Link>
           </div>
-          </div>
 
           {/* Right Grid Section */}
           <div className="text-center relative rounded-2xl min-h-[250px] bg-transparent col-span-1">
             <div className="py-16 px-8">
-              <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-6">
-                Benefits
+              <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-6 flex justify-center">
+                {rightTitleVisible ? (
+                  <span className="flex">
+                    {"Benefits".split('').map((char, index) => (
+                      <span
+                        key={index}
+                        className="inline-block animate-fadeInUp"
+                        style={{
+                          animationDelay: `${index * 0.1}s`,
+                          animationFillMode: 'both'
+                        }}
+                      >
+                        {char}
+                      </span>
+                    ))}
+                  </span>
+                ) : (
+                  "Benefits"
+                )}
               </h3>
               <div className="relative h-96 overflow-hidden">
                 <div className="space-y-4">
@@ -375,7 +435,13 @@ export default function Home() {
                         <div className="flex items-start gap-2">
                           <span>
                             {isDestroying ? (
-                              <span className="inline-block animate-letter-blast">
+                              <span 
+                                className="inline-block animate-letter-blast"
+                                style={{
+                                  '--blast-x': `${(Math.random() - 0.5) * 800}px`,
+                                  '--blast-y': `${-Math.random() * 400 - 200}px`
+                                } as React.CSSProperties}
+                              >
                                 {feature.emoji}
                               </span>
                             ) : (
@@ -386,8 +452,8 @@ export default function Home() {
                             {isDestroying ? (
                               <span className="inline-block">
                                 {feature.text.split('').map((char, charIndex) => {
-                                  const blastX = (Math.random() - 0.5) * 200
-                                  const blastY = -Math.random() * 100 - 50
+                                  const blastX = (Math.random() - 0.5) * 800
+                                  const blastY = -Math.random() * 400 - 200
                                   
                                   return (
                                     <span
