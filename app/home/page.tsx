@@ -26,6 +26,7 @@ export default function HomePage() {
   const [progress, setProgress] = useState(0)
   const progressRef = useRef<HTMLDivElement>(null)
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
+  const [showMoreStalkers, setShowMoreStalkers] = useState(false)
 
   const maxFollowers = 398
   const maxFollowings = 238
@@ -336,17 +337,38 @@ export default function HomePage() {
 
   const handleSwipe = (direction: 'left' | 'right') => {
     if (direction === 'left') {
-      nextStory()
+      // Swipe left = next person's story
+      if (currentUserIndex < storyUsers.length - 1) {
+        setCurrentUserIndex(currentUserIndex + 1)
+        setCurrentStoryIndex(0)
+        setProgress(0)
+      } else {
+        closeStory()
+      }
     } else {
-      previousStory()
+      // Swipe right = previous person's story
+      if (currentUserIndex > 0) {
+        setCurrentUserIndex(currentUserIndex - 1)
+        setCurrentStoryIndex(0)
+        setProgress(0)
+      }
     }
   }
 
   const handleTap = (side: 'left' | 'right') => {
     if (side === 'left') {
-      previousStory()
+      // Tap left = previous story of same user
+      if (currentStoryIndex > 0) {
+        setCurrentStoryIndex(currentStoryIndex - 1)
+        setProgress(0)
+      }
     } else {
-      nextStory()
+      // Tap right = next story of same user
+      const currentUser = storyUsers[currentUserIndex]
+      if (currentStoryIndex < currentUser.stories.length - 1) {
+        setCurrentStoryIndex(currentStoryIndex + 1)
+        setProgress(0)
+      }
     }
   }
 
@@ -527,6 +549,93 @@ export default function HomePage() {
     }
   ]
 
+  // Additional stalkers for discover more
+  const additionalStalkers = [
+    {
+      id: 16,
+      name: 'Secret Stalker',
+      username: '@stealth_watcher',
+      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face',
+      status: 'Friend',
+      isUnlocked: true
+    },
+    {
+      id: 17,
+      name: 'Secret Stalker',
+      username: '@ghost_browser',
+      image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=60&h=60&fit=crop&crop=face',
+      status: 'Friend',
+      isUnlocked: false
+    },
+    {
+      id: 18,
+      name: 'Secret Stalker',
+      username: '@shadow_viewer',
+      image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=60&h=60&fit=crop&crop=face',
+      status: 'Friend',
+      isUnlocked: true
+    },
+    {
+      id: 19,
+      name: 'Secret Stalker',
+      username: '@silent_observer',
+      image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face',
+      status: 'Friend',
+      isUnlocked: true
+    },
+    {
+      id: 20,
+      name: 'Secret Stalker',
+      username: '@mystery_browser',
+      image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=60&h=60&fit=crop&crop=face',
+      status: 'Friend',
+      isUnlocked: false
+    },
+    {
+      id: 21,
+      name: 'Secret Stalker',
+      username: '@covert_viewer',
+      image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=60&h=60&fit=crop&crop=face',
+      status: 'Friend',
+      isUnlocked: true
+    },
+    {
+      id: 22,
+      name: 'Secret Stalker',
+      username: '@phantom_browser',
+      image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=60&h=60&fit=crop&crop=face',
+      status: 'Friend',
+      isUnlocked: true
+    },
+    {
+      id: 23,
+      name: 'Secret Stalker',
+      username: '@invisible_observer',
+      image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=60&h=60&fit=crop&crop=face',
+      status: 'Friend',
+      isUnlocked: false
+    },
+    {
+      id: 24,
+      name: 'Secret Stalker',
+      username: '@stealth_follower',
+      image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face',
+      status: 'Friend',
+      isUnlocked: true
+    },
+    {
+      id: 25,
+      name: 'Secret Stalker',
+      username: '@ghost_admirer',
+      image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face',
+      status: 'Friend',
+      isUnlocked: true
+    }
+  ]
+
+  // Combine stalkers based on showMoreStalkers state
+  const displayStalkers = showMoreStalkers ? [...secretStalkers, ...additionalStalkers] : secretStalkers
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -693,7 +802,7 @@ export default function HomePage() {
           <div className="relative z-10">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Secret Stalkers</h2>
           <div className="space-y-3">
-            {secretStalkers.map((stalker) => (
+            {displayStalkers.map((stalker) => (
               <div key={stalker.id} className="flex items-center space-x-4 p-3 rounded-lg hover:bg-gray-50 transition-colors">
                 <div className="relative">
                   <img
@@ -728,6 +837,18 @@ export default function HomePage() {
               </div>
             ))}
           </div>
+          
+          {/* Discover More Button */}
+          {!showMoreStalkers && (
+            <div className="mt-6 text-center">
+              <button 
+                onClick={() => setShowMoreStalkers(true)}
+                className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-8 rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
+              >
+                Discover More
+              </button>
+            </div>
+          )}
           </div>
         </div>
       </div>
@@ -783,48 +904,93 @@ export default function HomePage() {
               />
             </div>
 
-            {/* Tap Areas for Navigation */}
+            {/* Navigation Areas */}
             <div className="absolute inset-0 flex">
-              {/* Left tap area - Previous story/user */}
+              {/* Left area - Previous story/user */}
               <div 
                 className="w-1/2 h-full cursor-pointer"
-                onClick={() => handleTap('left')}
-              />
-              {/* Right tap area - Next story/user */}
-              <div 
-                className="w-1/2 h-full cursor-pointer"
-                onClick={() => handleTap('right')}
-              />
-            </div>
-
-            {/* Swipe Areas */}
-            <div 
-              className="absolute inset-0"
-              onTouchStart={(e) => {
-                const startX = e.touches[0].clientX
-                const startY = e.touches[0].clientY
-                
-                const handleTouchEnd = (e: TouchEvent) => {
-                  const endX = e.changedTouches[0].clientX
-                  const endY = e.changedTouches[0].clientY
-                  const deltaX = endX - startX
-                  const deltaY = endY - startY
+                onTouchStart={(e) => {
+                  e.preventDefault()
+                  const startX = e.touches[0].clientX
+                  const startY = e.touches[0].clientY
+                  let hasMoved = false
                   
-                  // Only handle horizontal swipes
-                  if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
-                    if (deltaX > 0) {
-                      handleSwipe('right') // Swipe right = previous
-                    } else {
-                      handleSwipe('left') // Swipe left = next
-                    }
+                  const handleTouchMove = () => {
+                    hasMoved = true
                   }
                   
-                  document.removeEventListener('touchend', handleTouchEnd)
-                }
-                
-                document.addEventListener('touchend', handleTouchEnd)
-              }}
-            />
+                  const handleTouchEnd = (e: TouchEvent) => {
+                    const endX = e.changedTouches[0].clientX
+                    const endY = e.changedTouches[0].clientY
+                    const deltaX = endX - startX
+                    const deltaY = endY - startY
+                    
+                    // If it's a swipe, handle swipe, otherwise handle tap
+                    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+                      handleSwipe('right') // Swipe right = previous
+                    } else if (!hasMoved) {
+                      handleTap('left') // Tap left = previous story
+                    }
+                    
+                    document.removeEventListener('touchend', handleTouchEnd)
+                    document.removeEventListener('touchmove', handleTouchMove)
+                  }
+                  
+                  document.addEventListener('touchend', handleTouchEnd)
+                  document.addEventListener('touchmove', handleTouchMove)
+                }}
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  // Only handle click on desktop (no touch events)
+                  if (!('ontouchstart' in window)) {
+                    handleTap('left')
+                  }
+                }}
+              />
+              {/* Right area - Next story/user */}
+              <div 
+                className="w-1/2 h-full cursor-pointer"
+                onTouchStart={(e) => {
+                  e.preventDefault()
+                  const startX = e.touches[0].clientX
+                  const startY = e.touches[0].clientY
+                  let hasMoved = false
+                  
+                  const handleTouchMove = () => {
+                    hasMoved = true
+                  }
+                  
+                  const handleTouchEnd = (e: TouchEvent) => {
+                    const endX = e.changedTouches[0].clientX
+                    const endY = e.changedTouches[0].clientY
+                    const deltaX = endX - startX
+                    const deltaY = endY - startY
+                    
+                    // If it's a swipe, handle swipe, otherwise handle tap
+                    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+                      handleSwipe('left') // Swipe left = next
+                    } else if (!hasMoved) {
+                      handleTap('right') // Tap right = next story
+                    }
+                    
+                    document.removeEventListener('touchend', handleTouchEnd)
+                    document.removeEventListener('touchmove', handleTouchMove)
+                  }
+                  
+                  document.addEventListener('touchend', handleTouchEnd)
+                  document.addEventListener('touchmove', handleTouchMove)
+                }}
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  // Only handle click on desktop (no touch events)
+                  if (!('ontouchstart' in window)) {
+                    handleTap('right')
+                  }
+                }}
+              />
+            </div>
           </div>
         </div>
       )}
