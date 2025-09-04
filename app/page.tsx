@@ -69,134 +69,22 @@ export default function Home() {
   // Ref for focus reference
   const focusRef = useRef<HTMLDivElement>(null)
 
-  // Feature arrays
-  const allFeatures = [
-    { emoji: "🔍", text: "See Who Checks Your Profile – Spot secret visitors instantly." },
-    { emoji: "🕵️", text: "Watch Stories in Secret Mode – No one knows you watched." },
-    { emoji: "💾", text: "Save Instagram Stories – Download in HD, keep forever." },
-    { emoji: "🚫", text: "Who Blocked You? – Find out who closed the door on you." },
-    { emoji: "➕", text: "New Followers Alert – Get updates on fresh followers." },
-    { emoji: "➖", text: "Lost Followers Alert – Know who unfollowed you right away." },
-    { emoji: "❌", text: "Who Doesn't Follow Back – Detect one-sided follows." },
-    { emoji: "🙋", text: "Whom You Forgot to Follow Back – Fix missed connections." },
-    { emoji: "📊", text: "Smart Analytics – Clean and simple insights of your IG." },
-    { emoji: "⚡", text: "Fast & Lightweight – No slowdowns, just quick results." },
-    { emoji: "🔍", text: "Deep Profile Analysis – Understand your audience better." },
-    { emoji: "📱", text: "Mobile Optimized – Works perfectly on all devices." },
-    { emoji: "🔒", text: "We Never Save Personal Data – Your privacy is 100% safe." },
-    { emoji: "🛡️", text: "We Do Not Store Your Password – Your login stays yours." },
-    { emoji: "🌍", text: "Global & Easy to Use – Works anywhere, simple for everyone." },
-    { emoji: "🎯", text: "Accurate Insights – Get real, useful account reports." },
-    { emoji: "🤫", text: "Stay Invisible – Explore without being noticed." },
-    { emoji: "📈", text: "Track Growth Daily – See your progress in real-time." },
-    { emoji: "🎁", text: "Share Results Easily – One click to show friends." },
-    { emoji: "🧩", text: "All-in-One Tool – Profile views, blocks, stories, followers – all here." },
-    { emoji: "🌟", text: "No Extra Permissions – We only use what's needed, nothing more." },
-    { emoji: "❤️", text: "Made for Your Safety – Your account, your control, your freedom." },
-    { emoji: "💎", text: "Premium Features – Advanced tools for power users." },
-    { emoji: "🚀", text: "Instant Results – Get insights in seconds, not minutes." },
-    { emoji: "🎨", text: "Beautiful Reports – Stunning visualizations of your data." },
-    { emoji: "🔔", text: "Real-time Notifications – Never miss important updates." },
-    { emoji: "📊", text: "Historical Data – Track changes over time." },
-    { emoji: "🎪", text: "Fun & Interactive – Make analytics enjoyable to use." },
-    { emoji: "📸", text: "Story Viewers Tracker – See who viewed your stories." },
-    { emoji: "👥", text: "Mutual Followers Finder – Discover common connections." },
-    { emoji: "📅", text: "Posting Time Optimizer – Find best times to post." },
-    { emoji: "🏷️", text: "Hashtag Performance – Track which hashtags work best." },
-    { emoji: "💬", text: "Comment Sentiment Analysis – Understand audience mood." },
-    { emoji: "📊", text: "Engagement Rate Calculator – Measure your content success." },
-    { emoji: "🎯", text: "Target Audience Insights – Know your followers better." },
-    { emoji: "📈", text: "Follower Growth Predictions – Forecast your growth." },
-    { emoji: "🔍", text: "Competitor Analysis – Compare with similar accounts." },
-    { emoji: "📱", text: "Cross-Platform Sync – Works with multiple accounts." },
-    { emoji: "🎨", text: "Content Performance Score – Rate your posts quality." },
-    { emoji: "📊", text: "Reach & Impressions Tracker – Monitor your visibility." },
-    { emoji: "💡", text: "Content Suggestions – Get ideas for better posts." },
-    { emoji: "🔄", text: "Auto-Refresh Data – Always up-to-date information." },
-    { emoji: "📋", text: "Export Reports – Download your analytics data." },
-    { emoji: "🎭", text: "Fake Follower Detector – Identify bot accounts." },
-    { emoji: "⏰", text: "Best Time to Post – Optimize your posting schedule." },
-    { emoji: "📊", text: "Story Completion Rate – Track story engagement." },
-    { emoji: "🎯", text: "Audience Demographics – Age, location, interests data." }
-  ]
 
-  // State for current group and line indices
-  const [leftCurrentGroup, setLeftCurrentGroup] = useState(0)
-  const [rightCurrentGroup, setRightCurrentGroup] = useState(0)
-  const [leftCurrentLine, setLeftCurrentLine] = useState(0)
-  const [rightCurrentLine, setRightCurrentLine] = useState(0)
-  const [leftIsDestroying, setLeftIsDestroying] = useState(false)
-  const [rightIsDestroying, setRightIsDestroying] = useState(false)
-  const [leftTitleVisible, setLeftTitleVisible] = useState(false)
-  const [rightTitleVisible, setRightTitleVisible] = useState(false)
 
-  // Auto-rotate features with staggered timing - 5 points at a time
-  useEffect(() => {
-    // Show titles after a short delay
-    const showTitles = () => {
-      setLeftTitleVisible(false)
-      setRightTitleVisible(false)
-      setTimeout(() => {
-        setLeftTitleVisible(true)
-        setRightTitleVisible(true)
-      }, 100)
-    }
-    
-    // Initial show
-    showTitles()
-    
-    // Repeat every 3 seconds
-    const titleInterval = setInterval(showTitles, 3000)
-
-    const leftInterval = setInterval(() => {
-      setLeftCurrentLine((prev) => {
-        if (prev < 4) {
-          // Show next line (0, 1, 2, 3, 4 = 5 lines total)
-          return prev + 1
-        } else {
-          // All 5 lines shown, wait 3 seconds then destroy
-          setTimeout(() => {
-            setLeftIsDestroying(true)
-            setTimeout(() => {
-              setLeftIsDestroying(false)
-              setLeftCurrentGroup((group) => (group + 1) % 10) // 10 groups total
-              setLeftCurrentLine(0)
-            }, 1000)
-          }, 3000) // Wait 3 seconds before destroying
-          return prev
-        }
-      })
-    }, 1000)
-
-    const rightInterval = setInterval(() => {
-      setRightCurrentLine((prev) => {
-        if (prev < 4) {
-          // Show next line (0, 1, 2, 3, 4 = 5 lines total)
-          return prev + 1
-        } else {
-          // All 5 lines shown, wait 3 seconds then destroy
-          setTimeout(() => {
-            setRightIsDestroying(true)
-            setTimeout(() => {
-              setRightIsDestroying(false)
-              setRightCurrentGroup((group) => (group + 1) % 10) // 10 groups total
-              setRightCurrentLine(0)
-            }, 1000)
-          }, 3000) // Wait 3 seconds before destroying
-          return prev
-        }
-      })
-    }, 1000)
-
-    return () => {
-      clearInterval(leftInterval)
-      clearInterval(rightInterval)
-      clearInterval(titleInterval)
-    }
-  }, [])
 
   return (
-    <div className="min-h-screen bg-black relative overflow-hidden">
+    <div 
+      className="min-h-screen relative overflow-hidden"
+      style={{
+        backgroundImage: 'url("https://tinder.com/static/build/8ad4e4299ef5e377d2ef00ba5c94c44c.webp")',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed'
+      }}
+    >
+      {/* Dark overlay for better text readability */}
+      <div className="absolute inset-0 bg-black/60"></div>
       {/* Silver Ink Spread Background */}
       <div className="absolute inset-0">
         {/* Large ink blots */}
@@ -253,108 +141,13 @@ export default function Home() {
 
       {/* Main Content */}
       <main className="relative z-10 max-w-8xl mx-auto py-12 px-1 sm:px-2 lg:px-4">
-        {/* Grid Layout with Three Sections */}
-        <div className="grid grid-cols-12 gap-4 mb-16">
-          {/* Left Grid Section */}
-          <div className="text-center relative rounded-2xl min-h-[250px] bg-transparent col-span-3 mr-2">
-            <div className="py-16 px-4">
-              <h3 className="text-xl md:text-2xl font-bold text-white mb-6 flex justify-center">
-                {leftTitleVisible ? (
-                  <span className="flex">
-                    {"Features".split('').map((char, index) => (
-                      <span
-                        key={index}
-                        className="inline-block animate-fadeInUp"
-                        style={{
-                          animationDelay: `${index * 0.1}s`,
-                          animationFillMode: 'both'
-                        }}
-                      >
-                        {char}
-                      </span>
-                    ))}
-                  </span>
-                ) : (
-                  "Features"
-                )}
-              </h3>
-              <div className="relative h-[28rem] overflow-hidden">
-                <div className="space-y-6">
-                  {allFeatures.slice(leftCurrentGroup * 5, (leftCurrentGroup * 5) + 5).map((feature, index) => {
-                    const isVisible = index <= leftCurrentLine
-                    const isDestroying = leftIsDestroying && isVisible
-                    
-                    return (
-                      <div 
-                        key={`left-${leftCurrentGroup}-${index}`}
-                        className={`transition-all duration-500 ${
-                          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-                        }`}
-                      >
-                        <div className="flex items-start gap-2">
-                          <span>
-                            {isDestroying ? (
-                              <span 
-                                className="inline-block animate-letter-blast"
-                                style={{
-                                  '--blast-x': `${(Math.random() - 0.5) * 800}px`,
-                                  '--blast-y': `${-Math.random() * 400 - 200}px`
-                                } as React.CSSProperties}
-                              >
-                                {feature.emoji}
-                              </span>
-                            ) : (
-                              feature.emoji
-                            )}
-                          </span>
-                          <p className="text-sm text-gray-200 leading-relaxed font-semibold tracking-wide feature-text feature-highlight flex-1">
-                            {isDestroying ? (
-                              <span className="inline-block">
-                                {feature.text.split('').map((char, charIndex) => {
-                                  const blastX = (Math.random() - 0.5) * 800
-                                  const blastY = -Math.random() * 400 - 200
-                                  
-                                  return (
-                                    <span
-                                      key={charIndex}
-                                      className="inline-block animate-letter-blast"
-                                      style={{
-                                        '--blast-x': `${blastX}px`,
-                                        '--blast-y': `${blastY}px`
-                                      } as React.CSSProperties}
-                                    >
-                                      {char}
-                                    </span>
-                                  )
-                                })}
-                              </span>
-                            ) : (
-                              feature.text
-                            )}
-                          </p>
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
-              </div>
-            </div>
-          </div>
-
+        {/* Main Content Section */}
+        <div className="flex justify-center mb-16">
           {/* Center Section - Rotating Images */}
           <div 
-            className="text-center relative overflow-hidden rounded-2xl min-h-[500px] col-span-6"
-          style={{
-            backgroundImage: 'url("https://cdn-public.notjustanalytics.com/homepage/background.webp")',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-            backgroundColor: '#f3f4f6'
-          }}
+            className="text-center relative overflow-hidden rounded-2xl min-h-[500px] max-w-4xl w-full"
         >
-         <h2 className="text-2xl md:text-4xl font-bold text-white mt-3">
-              Connect with Your Network
-            </h2>
+       
           <div 
             ref={focusRef}
             className="relative z-10 pt-16 px-8 "
@@ -421,7 +214,7 @@ export default function Home() {
             <div className="absolute top-1 right-2 w-8 h-8 bg-gray-400/20 rounded-full blur-lg"></div>
             <div className="absolute bottom-1 left-2 w-6 h-6 bg-gray-300/15 rounded-full blur-md"></div>
             <span className="relative z-10">Start Analyze</span>
-            <ChevronRightIcon className="ml-2 h-5 w-5 relative z-10" />
+           
           </Link>
           
           {/* App Store and Play Store Buttons */}
@@ -430,13 +223,9 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-r from-gray-400/10 to-gray-500/5 rounded-xl"></div>
               <div className="absolute top-1 right-1 w-6 h-6 bg-gray-400/20 rounded-full blur-md"></div>
               <div className="absolute bottom-1 left-1 w-4 h-4 bg-gray-300/15 rounded-full blur-sm"></div>
-              <div className="flex items-center space-x-2 relative z-10">
-                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="black">
-                  <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.96-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.03-3.11z"/>
-                </svg>
-                <div className="text-left">
-                  <div className="text-xs">Download on the</div>
-                  <div className="text-sm font-semibold">App Store</div>
+              <div className="flex items-center space-x-2 relative z-10">              
+                <div className="text-left">                
+                  <div className="text-sm font-semibold">get extension</div>
                 </div>
               </div>
             </button>
@@ -448,97 +237,10 @@ export default function Home() {
               <div className="flex items-center space-x-2 relative z-10">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" focusable="false" role="img"><title></title><path fill="#EA4335" d="M11.278 11.462 1.185 22.006A2.725 2.725 0 0 0 3.818 24c.504 0 .978-.134 1.383-.37l.032-.018 11.362-6.452z"></path><path fill="#FBBC04" d="m21.489 9.667-.01-.007-4.905-2.8-5.526 4.841 5.547 5.46 4.877-2.774a2.676 2.676 0 0 0 1.437-2.365c0-1.017-.573-1.9-1.42-2.355"></path><path fill="#4285F4" d="M1.184 1.994c-.061.22-.093.45-.093.69v18.632c.01.267.033.47.094.69l10.44-10.275z"></path><path fill="#34A853" d="m11.352 12 5.222-5.14L5.228.385A2.764 2.764 0 0 0 3.818 0a2.72 2.72 0 0 0-2.634 1.99l-.001.003z"></path></svg>
                 <div className="text-left">
-                  <div className="text-xs">GET IT ON</div>
                   <div className="text-sm font-semibold">Google Play</div>
                 </div>
               </div>
             </button>
-          </div>
-          </div>
-
-          {/* Right Grid Section */}
-          <div className="text-center relative rounded-2xl min-h-[250px] bg-transparent col-span-3 ml-2">
-            <div className="py-16 px-4">
-              <h3 className="text-xl md:text-2xl font-bold text-white mb-6 flex justify-center">
-                {rightTitleVisible ? (
-                  <span className="flex">
-                    {"Benefits".split('').map((char, index) => (
-                      <span
-                        key={index}
-                        className="inline-block animate-fadeInUp"
-                        style={{
-                          animationDelay: `${index * 0.1}s`,
-                          animationFillMode: 'both'
-                        }}
-                      >
-                        {char}
-                      </span>
-                    ))}
-                  </span>
-                ) : (
-                  "Benefits"
-                )}
-              </h3>
-              <div className="relative h-[28rem] overflow-hidden">
-                <div className="space-y-6">
-                  {allFeatures.slice(24 + rightCurrentGroup * 5, 24 + (rightCurrentGroup * 5) + 5).map((feature, index) => {
-                    const isVisible = index <= rightCurrentLine
-                    const isDestroying = rightIsDestroying && isVisible
-                    
-                    return (
-                      <div 
-                        key={`right-${rightCurrentGroup}-${index}`}
-                        className={`transition-all duration-500 ${
-                          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-                        }`}
-                      >
-                        <div className="flex items-start gap-2">
-                          <span>
-                            {isDestroying ? (
-                              <span 
-                                className="inline-block animate-letter-blast"
-                                style={{
-                                  '--blast-x': `${(Math.random() - 0.5) * 800}px`,
-                                  '--blast-y': `${-Math.random() * 400 - 200}px`
-                                } as React.CSSProperties}
-                              >
-                                {feature.emoji}
-                              </span>
-                            ) : (
-                              feature.emoji
-                            )}
-                          </span>
-                          <p className="text-sm text-gray-200 leading-relaxed font-semibold tracking-wide feature-text feature-highlight flex-1">
-                            {isDestroying ? (
-                              <span className="inline-block">
-                                {feature.text.split('').map((char, charIndex) => {
-                                  const blastX = (Math.random() - 0.5) * 800
-                                  const blastY = -Math.random() * 400 - 200
-                                  
-                                  return (
-                                    <span
-                                      key={charIndex}
-                                      className="inline-block animate-letter-blast"
-                                      style={{
-                                        '--blast-x': `${blastX}px`,
-                                        '--blast-y': `${blastY}px`
-                                      } as React.CSSProperties}
-                                    >
-                                      {char}
-                                    </span>
-                                  )
-                                })}
-                              </span>
-                            ) : (
-                              feature.text
-                            )}
-                          </p>
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -581,7 +283,15 @@ export default function Home() {
               </svg>
             </div>
             <h4 className="text-xl font-semibold text-white-900 mb-2">Analytics</h4>
-            <p className="text-white-600">Comprehensive insights into follower growth and engagement patterns</p>
+            <ul className="text-sm text-gray-300 space-y-1 text-center">
+              <li>• Follower growth tracking</li>
+              <li>• Engagement rate analysis</li>
+              <li>• Post performance metrics</li>
+              <li>• Audience demographics</li>
+              <li>• Best posting times</li>
+              <li>• Hashtag effectiveness</li>
+            </ul>
+           
           </div>
           
           <div className="text-center p-6">
@@ -591,7 +301,15 @@ export default function Home() {
               </svg>
             </div>
             <h4 className="text-xl font-semibold text-white-900 mb-2">Real-time</h4>
-            <p className="text-white-600">Get instant updates on profile changes and activity</p>
+            <ul className="text-sm text-gray-300 space-y-1 text-center">
+              <li>• Live follower updates</li>
+              <li>• Instant notifications</li>
+              <li>• Real-time story views</li>
+              <li>• Immediate data refresh</li>
+              <li>• Live engagement tracking</li>
+              <li>• Up-to-the-minute insights</li>
+            </ul>
+          
           </div>
           
           <div className="text-center p-6">
@@ -601,7 +319,15 @@ export default function Home() {
               </svg>
             </div>
             <h4 className="text-xl font-semibold text-white-900 mb-2">Secure</h4>
-            <p className="text-white-600">Your data is protected with enterprise-grade security</p>
+            <ul className="text-sm text-gray-300 space-y-1 text-center">
+              <li>• End-to-end encryption</li>
+              <li>• No password storage</li>
+              <li>• Privacy protection</li>
+              <li>• Secure data handling</li>
+              <li>• GDPR compliant</li>
+              <li>• Enterprise-grade security</li>
+            </ul>
+         
           </div>
         </div>
       </main>
