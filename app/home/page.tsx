@@ -688,7 +688,7 @@ export default function HomePage() {
         }}
       >
         <div className="absolute inset-0 bg-black/20"></div>
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative z-10 max-w-7xl mx-auto  ">
           <div className="flex justify-between items-center py-2">
             <div className="flex items-center">
               <Link href="/" className="text-2xl font-bold text-white">Instalker</Link>

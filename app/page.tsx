@@ -253,8 +253,8 @@ export default function Home() {
         backgroundAttachment: 'fixed'
       }}
     >
-      {/* Dark overlay for better text readability */}
-      <div className="absolute inset-0 bg-black/60"></div>
+      {/* Light overlay for better text readability */}
+      <div className="absolute inset-0 bg-black/30"></div>
       {/* Silver Ink Spread Background */}
       <div className="absolute inset-0">
         {/* Large ink blots */}
@@ -292,18 +292,14 @@ export default function Home() {
         }}
       >
         <div className="absolute inset-0 bg-black/60"></div>
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative z-10 max-w-30 mx-auto ml-10 mr-10 ">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center">
               <h1 className="text-2xl font-bold text-white">Instalker</h1>
             </div>
             <nav className="hidden md:flex space-x-8">
-              <Link href="/home" className="flex items-center space-x-1 text-white hover:text-white/90 transition-colors">
-                <HomeIcon className="h-5 w-5" />
-                <span>Home</span>
-              </Link>
-              <a href="#" className="text-white/90 hover:text-white transition-colors">Features</a>
-              <a href="#" className="text-white/90 hover:text-white transition-colors">About</a>
+         <Link href="/about" className="text-white/90 hover:text-white transition-colors">About</Link>
+         <Link href="/help" className="text-white/90 hover:text-white transition-colors">Help</Link>
             </nav>
           </div>
         </div>
