@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Instalker',
-  description: 'Analyze Instagram profiles, followers, and insights with just one click.',
+  description: 'Analyze IG profiles, followers, and insights with just one click.',
 }
 
 export default function RootLayout({

@@ -1,13 +1,13 @@
-# Instagram Tracker - Full Stack Web Application
+# IG Tracker - Full Stack Web Application
 
-A modern full-stack web application built with Next.js (frontend) and Nest.js (backend) for tracking and analyzing Instagram profiles.
+A modern full-stack web application built with Next.js (frontend) and Nest.js (backend) for tracking and analyzing IG profiles.
 
 ## 🚀 Features
 
 ### Frontend (Next.js)
 - **Landing Page**: Beautiful rotating profile images slider with network visualization
 - **Track People Section**: Clean call-to-action with "Start Analyze" button
-- **Instagram Login Page**: Secure login form with username/password fields
+- **IG Login Page**: Secure login form with username/password fields
 - **Dashboard**: Comprehensive analytics dashboard with:
   - Profile statistics and metrics
   - Recent activity feed
@@ -18,7 +18,7 @@ A modern full-stack web application built with Next.js (frontend) and Nest.js (b
 ### Backend (Nest.js)
 - **Authentication System**: JWT-based authentication with login/register
 - **User Management**: Complete CRUD operations for users
-- **Instagram Integration**: Profile tracking and analytics endpoints
+- **IG Integration**: Profile tracking and analytics endpoints
 - **API Documentation**: Swagger/OpenAPI documentation
 - **Security**: Password hashing, CORS, validation
 
@@ -57,7 +57,7 @@ A modern full-stack web application built with Next.js (frontend) and Nest.js (b
    npm run dev
    ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser
+4. Open http://localhost:3000 in your browser
 
 ### Backend Setup
 
@@ -83,8 +83,8 @@ A modern full-stack web application built with Next.js (frontend) and Nest.js (b
    npm run start:dev
    ```
 
-6. The API will be available at [http://localhost:3001](http://localhost:3001)
-7. API documentation at [http://localhost:3001/api](http://localhost:3001/api)
+6. The API will be available at http://localhost:3001
+7. API documentation at http://localhost:3001/api
 
 ## 🎨 UI/UX Features
 
@@ -97,8 +97,8 @@ A modern full-stack web application built with Next.js (frontend) and Nest.js (b
 ## 🔐 Authentication Flow
 
 1. User clicks "Start Analyze" on landing page
-2. Redirected to Instagram login page
-3. User enters credentials (dummy for now)
+2. Redirected to IG login page
+3. User enters credentials
 4. After successful login, redirected to dashboard
 5. Dashboard shows comprehensive analytics and insights
 
@@ -124,8 +124,8 @@ A modern full-stack web application built with Next.js (frontend) and Nest.js (b
 - `PATCH /users/:id` - Update user
 - `DELETE /users/:id` - Delete user
 
-### Instagram
-- `POST /instagram/track` - Track Instagram profile
+### IG
+- `POST /instagram/track` - Track IG profile
 - `GET /instagram/profiles` - Get tracked profiles
 - `GET /instagram/analytics/:profileId` - Get profile analytics
 - `GET /instagram/insights/:profileId` - Get profile insights
@@ -162,7 +162,7 @@ npm run test         # Run unit tests
 │   ├── src/
 │   │   ├── auth/          # Authentication module
 │   │   ├── users/         # Users module
-│   │   ├── instagram/     # Instagram module
+│   │   ├── instagram/     # IG module
 │   │   ├── app.module.ts  # Main app module
 │   │   └── main.ts        # Application entry point
 │   └── package.json
@@ -173,7 +173,7 @@ npm run test         # Run unit tests
 
 ## 🎯 Future Enhancements
 
-- [ ] Real Instagram API integration
+- [ ] Real IG API integration
 - [ ] Database integration (PostgreSQL/MongoDB)
 - [ ] Real-time notifications
 - [ ] Advanced analytics and reporting
@@ -202,4 +202,4 @@ If you encounter any issues or have questions, please open an issue on GitHub.
 
 ---
 
-**Note**: This is a demo application. The Instagram integration is currently mocked for demonstration purposes. In a production environment, you would need to integrate with the official Instagram API and implement proper authentication flows.
+**Note**: This is a demo application. The IG integration is currently mocked for demonstration purposes. In a production environment, you would need to integrate with the official IG API and implement proper authentication flows.

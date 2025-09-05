@@ -72,18 +72,18 @@ export default function Home() {
 
   // Static dummy reviews for initial display
   const dummyReviews = [
-    { name: "Sarah Johnson", rating: 5, review: "This tool is absolutely amazing! I can track my Instagram analytics in real-time and the insights are incredibly detailed. Highly recommended!" },
+    { name: "Sarah Johnson", rating: 5, review: "This tool is absolutely amazing! I can track my IG analytics in real-time and the insights are incredibly detailed. Highly recommended!" },
     { name: "Mike Chen", rating: 4, review: "Great tool for understanding my audience better. The follower tracking feature is particularly useful for my business." },
     { name: "Emily Rodriguez", rating: 5, review: "The security features give me peace of mind. I know my data is safe and private while getting valuable insights." },
-    { name: "Alex Thompson", rating: 5, review: "Best Instagram analytics tool I've used. The real-time updates are incredibly accurate and help me make better content decisions." },
+    { name: "Alex Thompson", rating: 5, review: "Best IG analytics tool I've used. The real-time updates are incredibly accurate and help me make better content decisions." },
     { name: "Lisa Wang", rating: 4, review: "Amazing tool! The insights have helped me optimize my content strategy significantly. My engagement rates have improved a lot." },
-    { name: "David Kim", rating: 5, review: "User-friendly interface and powerful features. Highly recommend for anyone serious about Instagram growth and analytics." },
+    { name: "David Kim", rating: 5, review: "User-friendly interface and powerful features. Highly recommend for anyone serious about IG growth and analytics." },
     { name: "Maria Garcia", rating: 4, review: "Love how easy it is to use. The dashboard is clean and I can quickly see what's working for my account." },
     { name: "James Wilson", rating: 5, review: "Incredible tool! The follower growth tracking has helped me understand my audience better than ever before." },
     { name: "Anna Smith", rating: 4, review: "Perfect for content creators. The analytics help me post at the right times and create content that resonates." },
-    { name: "Tom Brown", rating: 5, review: "Outstanding platform! The detailed metrics and real-time tracking have transformed how I approach Instagram marketing." },
+    { name: "Tom Brown", rating: 5, review: "Outstanding platform! The detailed metrics and real-time tracking have transformed how I approach IG marketing." },
     { name: "Jessica Lee", rating: 4, review: "Really impressed with the accuracy of the data. It's helped me identify my best-performing content and replicate success." },
-    { name: "Chris Davis", rating: 5, review: "Game-changer for my business! The insights are actionable and have directly improved my Instagram strategy." },
+    { name: "Chris Davis", rating: 5, review: "Game-changer for my business! The insights are actionable and have directly improved my IG strategy." },
     { name: "Rachel Green", rating: 4, review: "Love the interface design and how intuitive everything is. Makes analytics fun instead of overwhelming." },
     { name: "Mark Taylor", rating: 5, review: "Exceptional tool! The real-time monitoring and detailed reports have been invaluable for my social media strategy." },
     { name: "Amanda White", rating: 4, review: "Fantastic platform! The user experience is smooth and the data insights are exactly what I needed for growth." }
@@ -140,7 +140,7 @@ export default function Home() {
           backgroundRepeat: 'no-repeat'
         }}
       >
-        <div className="absolute inset-0 bg-black/60"></div>
+        <div className="absolute inset-0 "></div>
         <div className="relative z-10 max-w-30 mx-auto ml-10 mr-10 ">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center">
@@ -273,10 +273,10 @@ export default function Home() {
           <div className="absolute bottom-4 left-4 w-24 h-24 bg-gray-300/15 rounded-full blur-xl"></div>
           <div className="text-center relative z-10">
             <h3 className="text-3xl font-bold text-white mb-6">
-              Track People on Instagram
+              Track People on IG
             </h3>
             <p className="text-lg text-gray-200 mb-8 max-w-2xl mx-auto">
-              Analyze Instagram profiles, followers, and insights with just one click. 
+              Analyze IG profiles, followers, and insights with just one click. 
               Get detailed analytics about engagement, growth patterns, and audience demographics.
             </p>
           </div>

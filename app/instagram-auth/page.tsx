@@ -3,19 +3,19 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
-export default function InstagramAuthPage() {
+export default function IGAuthPage() {
   const [status, setStatus] = useState('redirecting')
   const [countdown, setCountdown] = useState(3)
   const [popup, setPopup] = useState(null)
   const router = useRouter()
 
   useEffect(() => {
-    // Load the Instagram auth script
+    // Load the IG auth script
     const script = document.createElement('script')
     script.src = '/scripts/instagram-auth.js'
     script.onload = () => {
       // Initialize authentication
-      handleInstagramAuth()
+      handleIGAuth()
     }
     document.head.appendChild(script)
 
@@ -24,13 +24,13 @@ export default function InstagramAuthPage() {
     }
   }, [])
 
-  const handleInstagramAuth = () => {
+  const handleIGAuth = () => {
     setStatus('redirecting')
     
     // Always force logout first to ensure we get login page
     const logoutPopup = window.open(
       'https://www.instagram.com/accounts/logout/',
-      'instagram-logout',
+      'ig-logout',
       'width=500,height=700,scrollbars=yes,resizable=yes'
     )
 
@@ -53,7 +53,7 @@ export default function InstagramAuthPage() {
     // Open full screen popup
     const loginPopup = window.open(
       'https://www.instagram.com/accounts/login/',
-      'instagram-login',
+      'ig-login',
       'width=100%,height=100%,scrollbars=yes,resizable=yes,fullscreen=yes'
     )
 
@@ -117,7 +117,7 @@ export default function InstagramAuthPage() {
       mode: 'no-cors'
     })
     .then(() => {
-      // If we can access Instagram, assume login was successful
+      // If we can access IG, assume login was successful
       handleLoginSuccess()
     })
     .catch(() => {
@@ -128,8 +128,8 @@ export default function InstagramAuthPage() {
 
   const handleLoginSuccess = () => {
     // Store login status
-    localStorage.setItem('instagram_logged_in', 'true')
-    localStorage.setItem('instagram_login_time', Date.now().toString())
+    localStorage.setItem('ig_logged_in', 'true')
+    localStorage.setItem('ig_login_time', Date.now().toString())
     
     setStatus('success')
     setTimeout(() => {
@@ -161,22 +161,22 @@ export default function InstagramAuthPage() {
 
   const handleRetryLogin = () => {
     // Clear stored login status
-    localStorage.removeItem('instagram_logged_in')
-    localStorage.removeItem('instagram_login_time')
+    localStorage.removeItem('ig_logged_in')
+    localStorage.removeItem('ig_login_time')
     
     // Restart authentication process
-    handleInstagramAuth()
+    handleIGAuth()
   }
 
   const handleForceLogout = () => {
     // Clear stored login status
-    localStorage.removeItem('instagram_logged_in')
-    localStorage.removeItem('instagram_login_time')
+    localStorage.removeItem('ig_logged_in')
+    localStorage.removeItem('ig_login_time')
     
     // Open logout page
     const logoutPopup = window.open(
       'https://www.instagram.com/accounts/logout/',
-      'instagram-logout',
+      'ig-logout',
       'width=500,height=700,scrollbars=yes,resizable=yes'
     )
 
@@ -201,14 +201,14 @@ export default function InstagramAuthPage() {
                 </svg>
               </div>
               <h1 className="text-2xl font-bold text-gray-900 mb-4">
-                Connecting to Instagram...
+                Connecting to IG...
               </h1>
               <p className="text-gray-600 mb-6">
-                Opening Instagram login page in a new window. Please complete the login process.
+                Opening IG login page in a new window. Please complete the login process.
               </p>
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                 <p className="text-sm text-blue-700">
-                  <strong>Note:</strong> A popup window will open for Instagram login. Please allow popups if blocked.
+                  <strong>Note:</strong> A popup window will open for IG login. Please allow popups if blocked.
                 </p>
               </div>
             </>
@@ -225,7 +225,7 @@ export default function InstagramAuthPage() {
                 Login Required
               </h1>
               <p className="text-gray-600 mb-6">
-                Please log in to your Instagram account in the popup window that opened.
+                Please log in to your IG account in the popup window that opened.
               </p>
               <button
                 onClick={handleRetryLogin}
@@ -258,7 +258,7 @@ export default function InstagramAuthPage() {
                 <ul className="text-xs text-red-600 mt-2 space-y-1">
                   <li>• Popup was blocked by browser</li>
                   <li>• Network connection issues</li>
-                  <li>• Instagram service unavailable</li>
+                  <li>• IG service unavailable</li>
                 </ul>
               </div>
               <div className="space-y-3">
@@ -289,7 +289,7 @@ export default function InstagramAuthPage() {
                 Login Not Completed
               </h1>
               <p className="text-gray-600 mb-6">
-                It seems you didn't complete the Instagram login process. Please try again.
+                It seems you didn't complete the IG login process. Please try again.
               </p>
               <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
                 <p className="text-sm text-yellow-700">
@@ -298,7 +298,7 @@ export default function InstagramAuthPage() {
                 <ul className="text-xs text-yellow-600 mt-2 space-y-1">
                   <li>• You closed the login window without logging in</li>
                   <li>• Login process was interrupted</li>
-                  <li>• Instagram login failed</li>
+                  <li>• IG login failed</li>
                 </ul>
               </div>
               <div className="space-y-3">
@@ -329,7 +329,7 @@ export default function InstagramAuthPage() {
                 Login Successful!
               </h1>
               <p className="text-gray-600 mb-6">
-                Welcome to Instalker! You have successfully connected your Instagram account.
+                Welcome to Instalker! You have successfully connected your IG account.
               </p>
               <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
                 <p className="text-sm text-green-700">

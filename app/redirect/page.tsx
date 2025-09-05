@@ -39,11 +39,11 @@ export default function RedirectPage() {
 
           {/* Success Message */}
           <h1 className="text-2xl font-bold text-gray-900 mb-4">
-            Instagram Login Successful!
+            IG Login Successful!
           </h1>
           
           <p className="text-gray-600 mb-6">
-            Welcome to Instalker! You have successfully connected your Instagram account.
+            Welcome to Instalker! You have successfully connected your IG account.
           </p>
 
           {/* Countdown */}

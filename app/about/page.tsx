@@ -29,7 +29,7 @@ export default function Features() {
           backgroundRepeat: 'no-repeat'
         }}
       >
-        <div className="absolute inset-0 bg-black/60"></div>
+        <div className="absolute inset-0 "></div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8  ml-10 mr-10">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-4">
@@ -61,7 +61,7 @@ export default function Features() {
           </h1>
           <p className="text-xl text-gray-200 mb-8 max-w-3xl mx-auto leading-relaxed">
             Discover the comprehensive suite of tools and features that make Instalker the ultimate 
-            Instagram analytics platform. Everything you need to grow and succeed on social media.
+            IG analytics platform. Everything you need to grow and succeed on social media.
           </p>
         </div>
 
@@ -76,13 +76,13 @@ export default function Features() {
             <div className="grid md:grid-cols-2 gap-8 items-center">
               <div>
                 <p className="text-lg text-gray-200 mb-6 leading-relaxed">
-                  Instalker provides a comprehensive suite of Instagram analytics tools designed to give you 
+                  Instalker provides a comprehensive suite of IG analytics tools designed to give you 
                   complete visibility into your social media performance. From follower tracking to engagement 
                   analysis, we've got everything you need.
                 </p>
                 <p className="text-lg text-gray-200 mb-6 leading-relaxed">
                   Our advanced algorithms process millions of data points to deliver accurate, real-time insights 
-                  that help you make informed decisions about your content strategy and grow your Instagram presence.
+                  that help you make informed decisions about your content strategy and grow your IG presence.
                 </p>
               </div>
               <div className="flex justify-center">
@@ -108,7 +108,7 @@ export default function Features() {
                 </div>
                 <h3 className="text-2xl font-bold text-white mb-4">Profile Analytics</h3>
                 <p className="text-gray-200 leading-relaxed">
-                  Get detailed insights into any Instagram profile including follower count, 
+                  Get detailed insights into any IG profile including follower count, 
                   engagement rates, and growth patterns.
                 </p>
               </div>
@@ -160,7 +160,7 @@ export default function Features() {
                   </div>
                   <div>
                     <h3 className="text-xl font-semibold text-white mb-2">Story Viewer</h3>
-                    <p className="text-gray-200">View Instagram stories anonymously without leaving a trace or notification.</p>
+                    <p className="text-gray-200">View IG stories anonymously without leaving a trace or notification.</p>
                   </div>
                 </div>
                 
@@ -225,7 +225,7 @@ export default function Features() {
           <h2 className="text-4xl font-bold text-white mb-8">Why Choose Instalker?</h2>
           <p className="text-xl text-gray-200 mb-12 max-w-3xl mx-auto">
             Experience the difference with our comprehensive feature set designed to give you 
-            complete control over your Instagram analytics and growth.
+            complete control over your IG analytics and growth.
           </p>
           
           <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
@@ -270,7 +270,7 @@ export default function Features() {
                 Ready to Explore All Features?
               </h2>
               <p className="text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
-                Start using Instalker today and discover the power of advanced Instagram analytics.
+                Start using Instalker today and discover the power of advanced IG analytics.
               </p>
               <Link
                 href="/home"

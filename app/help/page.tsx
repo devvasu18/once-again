@@ -37,11 +37,11 @@ export default function Help() {
   const faqs = [
     {
       question: "How do I get started with Instalker?",
-      answer: "Simply click the 'Start Now' button on our homepage, and you'll be guided through a quick setup process to connect your Instagram account securely."
+      answer: "Simply click the 'Start Now' button on our homepage, and you'll be guided through a quick setup process to connect your IG account securely."
     },
     {
       question: "Is my data safe and private?",
-      answer: "Absolutely! We use end-to-end encryption and never store your Instagram password. Your data is completely secure and private."
+      answer: "Absolutely! We use end-to-end encryption and never store your IG password. Your data is completely secure and private."
     },
     {
       question: "What analytics features are available?",
@@ -52,8 +52,8 @@ export default function Help() {
       answer: "Our data accuracy is 99.9% thanks to our advanced algorithms and real-time data processing systems."
     },
     {
-      question: "Can I track multiple Instagram accounts?",
-      answer: "Yes! You can track multiple Instagram accounts from a single dashboard for comprehensive analytics management."
+      question: "Can I track multiple IG accounts?",
+      answer: "Yes! You can track multiple IG accounts from a single dashboard for comprehensive analytics management."
     },
     {
       question: "Is there a mobile app available?",
@@ -85,7 +85,6 @@ export default function Help() {
           backgroundRepeat: 'no-repeat'
         }}
       >
-        <div className="absolute inset-0 bg-black/60"></div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-4">
@@ -328,7 +327,6 @@ export default function Help() {
           backgroundRepeat: 'no-repeat'
         }}
       >
-        <div className="absolute inset-0 bg-black/60"></div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center text-white">
             <p>&copy; 2024 Instalker. All rights reserved.</p>

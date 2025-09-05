@@ -30,10 +30,10 @@ export default function InstructionsPage() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            How to Connect Instagram
+            How to Connect IG
           </h1>
           <p className="text-xl text-gray-600">
-            Follow these simple steps to connect your Instagram account
+            Follow these simple steps to connect your IG account
           </p>
         </div>
 
@@ -52,13 +52,13 @@ export default function InstructionsPage() {
                   Click "Start Analyze" Button
                 </h3>
                 <p className="text-gray-600 mb-4">
-                  On the landing page, click the "Start Analyze" button. This will open Instagram's official login page in a new tab.
+                  On the landing page, click the "Start Analyze" button. This will open IG's official login page in a new tab.
                 </p>
                 <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                   <div className="flex items-center">
                     <ExclamationTriangleIcon className="h-5 w-5 text-blue-400 mr-2" />
                     <p className="text-sm text-blue-700">
-                      <strong>Note:</strong> The Instagram login page will open in a new tab for security reasons.
+                      <strong>Note:</strong> The IG login page will open in a new tab for security reasons.
                     </p>
                   </div>
                 </div>
@@ -76,16 +76,16 @@ export default function InstructionsPage() {
               </div>
               <div className="flex-1">
                 <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                  Login to Instagram
+                  Login to IG
                 </h3>
                 <p className="text-gray-600 mb-4">
-                  On the Instagram login page, enter your username/email and password to log into your Instagram account.
+                  On the IG login page, enter your username/email and password to log into your IG account.
                 </p>
                 <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
                   <div className="flex items-center">
                     <CheckCircleIcon className="h-5 w-5 text-purple-400 mr-2" />
                     <p className="text-sm text-purple-700">
-                      <strong>Study Purpose:</strong> This is the real Instagram login page for educational purposes.
+                      <strong>Study Purpose:</strong> This is the real IG login page for educational purposes.
                     </p>
                   </div>
                 </div>
@@ -106,7 +106,7 @@ export default function InstructionsPage() {
                   Return to Instalker
                 </h3>
                 <p className="text-gray-600 mb-4">
-                  After successfully logging into Instagram, close the Instagram tab and return to this Instalker tab. 
+                  After successfully logging into IG, close the IG tab and return to this Instalker tab. 
                   Then click the button below to access your dashboard.
                 </p>
                 <Link
@@ -150,8 +150,8 @@ export default function InstructionsPage() {
           </h3>
           <ul className="text-sm text-gray-600 space-y-2">
             <li>• This is a study project for educational purposes only</li>
-            <li>• We do not store or access your Instagram credentials</li>
-            <li>• The Instagram login is handled entirely by Instagram's secure servers</li>
+            <li>• We do not store or access your IG credentials</li>
+            <li>• The IG login is handled entirely by IG's secure servers</li>
             <li>• Your data remains private and secure</li>
             <li>• This application is for learning web development concepts</li>
           </ul>
