@@ -101,7 +101,7 @@ export default function Help() {
               <h1 className="text-2xl font-bold text-white">Instalker</h1>
             </div>
             <nav className="hidden md:flex space-x-8">
-              <Link href="/about" className="text-white/90 hover:text-white transition-colors">About</Link>
+              <Link href="/features" className="text-white/90 hover:text-white transition-colors">Features</Link>
               <Link href="/help" className="text-white/90 hover:text-white transition-colors">Help</Link>
             </nav>
           </div>

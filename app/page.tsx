@@ -69,19 +69,6 @@ export default function Home() {
   // Ref for focus reference
   const focusRef = useRef<HTMLDivElement>(null)
 
-  // Review modal state
-  const [showReviewModal, setShowReviewModal] = useState(false)
-  const [reviewText, setReviewText] = useState('')
-  const [rating, setRating] = useState(0)
-  const [userName, setUserName] = useState('')
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [reviews, setReviews] = useState([])
-  const [hasSubmittedReview, setHasSubmittedReview] = useState(false)
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false)
-  const [lastSubmittedReview, setLastSubmittedReview] = useState<{name: string, review: string} | null>(null)
-  const [pauseAnimation, setPauseAnimation] = useState(false)
-  const [isLoadingReviews, setIsLoadingReviews] = useState(true)
-  const [showTransition, setShowTransition] = useState(false)
 
   // Static dummy reviews for initial display
   const dummyReviews = [
@@ -102,145 +89,7 @@ export default function Home() {
     { name: "Amanda White", rating: 4, review: "Fantastic platform! The user experience is smooth and the data insights are exactly what I needed for growth." }
   ]
 
-  // Fetch reviews from database
-  const fetchReviews = async () => {
-    try {
-      const response = await fetch('/api/reviews')
-      if (response.ok) {
-        const data = await response.json()
-        const reviewsData = data.reviews || []
-        
-        // Shuffle reviews to randomize order
-        const shuffledReviews = reviewsData.sort(() => Math.random() - 0.5)
-        
-        // If user just submitted a review, center it
-        if (lastSubmittedReview) {
-          const userReview = shuffledReviews.find((review: any) => 
-            review.name === lastSubmittedReview.name && 
-            review.review === lastSubmittedReview.review
-          )
-          
-          if (userReview) {
-            // Remove user review from its current position
-            const otherReviews = shuffledReviews.filter((review: any) => 
-              !(review.name === lastSubmittedReview.name && 
-                review.review === lastSubmittedReview.review)
-            )
-            
-            // Calculate center position
-            const centerIndex = Math.floor(otherReviews.length / 2)
-            
-            // Insert user review in center
-            const centeredReviews = [
-              ...otherReviews.slice(0, centerIndex),
-              userReview,
-              ...otherReviews.slice(centerIndex)
-            ]
-            
-            setReviews(centeredReviews)
-            
-            // Pause animation for 5 seconds to show user's review in center
-            setPauseAnimation(true)
-            setTimeout(() => {
-              setPauseAnimation(false)
-            }, 5000)
-            return
-          }
-        }
-        
-        // Start transition to real reviews
-        setShowTransition(true)
-        
-        // After a short delay, switch to real reviews
-        setTimeout(() => {
-          setReviews(shuffledReviews)
-          setIsLoadingReviews(false)
-          // Keep transition state for fade-in effect
-          setTimeout(() => {
-            setShowTransition(false)
-          }, 500)
-        }, 1000)
-      }
-    } catch (error) {
-      console.error('Error fetching reviews:', error)
-      setIsLoadingReviews(false)
-    }
-  }
 
-  // Check if user has already submitted a review
-  const checkReviewStatus = () => {
-    const hasReview = localStorage.getItem('instalker-review-submitted')
-    setHasSubmittedReview(hasReview === 'true')
-  }
-
-  // Load reviews and check status on component mount
-  useEffect(() => {
-    fetchReviews()
-    checkReviewStatus()
-    
-    // Set loading to false after 3 seconds to show dummy reviews
-    const timer = setTimeout(() => {
-      setIsLoadingReviews(false)
-    }, 3000)
-    
-    return () => clearTimeout(timer)
-  }, [])
-
-  // Handle review submission
-  const handleSubmitReview = async () => {
-    if (!userName.trim()) {
-      alert('Please enter your name.')
-      return
-    }
-
-    if (reviewText.length > 80) {
-      alert('Review must be 80 characters or less.')
-      return
-    }
-
-    setIsSubmitting(true)
-    try {
-      const response = await fetch('/api/reviews', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: userName,
-          rating: rating,
-          review: reviewText,
-        }),
-      })
-
-      if (response.ok) {
-        // Save to localStorage to prevent duplicate submissions
-        localStorage.setItem('instalker-review-submitted', 'true')
-        setHasSubmittedReview(true)
-        
-        // Store the last submitted review for highlighting
-        setLastSubmittedReview({ name: userName, review: reviewText })
-        
-        // Show success message
-        setShowSuccessMessage(true)
-        setTimeout(() => setShowSuccessMessage(false), 3000) // Hide after 3 seconds
-        
-        setShowReviewModal(false)
-        setReviewText('')
-        setRating(0)
-        setUserName('')
-        
-        // Refresh reviews to show the new one
-        await fetchReviews()
-        } else {
-        alert('Failed to submit review. Please try again.')
-      }
-    } catch (error) {
-      console.error('Error submitting review:', error)
-      alert('Failed to submit review. Please try again.')
-    } finally {
-      setIsSubmitting(false)
-    }
-  }
 
   return (
     <div 
@@ -298,24 +147,13 @@ export default function Home() {
               <h1 className="text-2xl font-bold text-white">Instalker</h1>
             </div>
             <nav className="hidden md:flex space-x-8">
-         <Link href="/about" className="text-white/90 hover:text-white transition-colors">About</Link>
+         <Link href="/features" className="text-white/90 hover:text-white transition-colors">Features</Link>
          <Link href="/help" className="text-white/90 hover:text-white transition-colors">Help</Link>
             </nav>
           </div>
         </div>
       </header>
 
-      {/* Success Message */}
-      {showSuccessMessage && (
-        <div className="relative z-30 max-w-8xl mx-auto px-4 pt-4">
-          <div className="inline-flex items-center px-4 py-2 bg-green-500/20 text-green-300 text-sm font-medium rounded-lg border border-green-500/30 backdrop-blur-sm">
-            <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-            </svg>
-            Review added successfully!
-          </div>
-        </div>
-      )}
 
       {/* Main Content */}
       <main className="relative z-10 max-w-8xl mx-auto py-12 px-1 sm:px-2 lg:px-4">
@@ -525,13 +363,10 @@ export default function Home() {
 
           {/* Reviews Carousel */}
           <div className="relative overflow-hidden mb-8">
-            {isLoadingReviews }
-            {showTransition}
-            
-            <div className={`flex space-x-6 ${pauseAnimation ? '' : 'animate-scroll-reviews'} transition-opacity duration-1000 ${showTransition ? 'opacity-50' : 'opacity-100'}`}>
+            <div className="flex space-x-6 animate-scroll-reviews">
               {/* Review Cards */}
-              {(isLoadingReviews ? dummyReviews : reviews).length > 0 ? (
-                (isLoadingReviews ? dummyReviews : reviews).map((review, index) => {
+              {dummyReviews.length > 0 ? (
+                dummyReviews.map((review, index) => {
                   const colors = [
                     'from-blue-500 to-purple-600',
                     'from-green-500 to-teal-600',
@@ -544,16 +379,11 @@ export default function Home() {
                   ]
                   const colorClass = colors[index % colors.length]
                   const firstLetter = review.name ? review.name.charAt(0).toUpperCase() : 'U'
-                  const isUserReview = lastSubmittedReview && 
-                    review.name === lastSubmittedReview.name && 
-                    review.review === lastSubmittedReview.review
                   
                   return (
                     <div 
-                      key={review._id || index} 
-                      className={`flex-shrink-0 w-80 h-48 bg-gradient-to-br from-gray-700/50 to-gray-800/50 rounded-xl p-6 border border-gray-600/30 backdrop-blur-sm flex flex-col ${
-                        isUserReview ? 'ring-2 ring-green-400/50 shadow-lg shadow-green-400/20 transform scale-105' : ''
-                      }`}
+                      key={index} 
+                      className="flex-shrink-0 w-80 h-48 bg-gradient-to-br from-gray-700/50 to-gray-800/50 rounded-xl p-6 border border-gray-600/30 backdrop-blur-sm flex flex-col"
                     >
                       <div className="flex items-center mb-4">
                         <div className={`w-12 h-12 bg-gradient-to-r ${colorClass} rounded-full flex items-center justify-center text-white font-bold text-lg`}>
@@ -570,14 +400,6 @@ export default function Home() {
                         <p className="text-gray-200 text-sm leading-relaxed line-clamp-3">
                           "{review.review}"
                         </p>
-                        {isUserReview && (
-                          <div className="mt-3 text-xs text-green-400 font-medium flex items-center">
-                            <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                            </svg>
-                            Your review
-                          </div>
-                        )}
                       </div>
                     </div>
                   )
@@ -593,24 +415,15 @@ export default function Home() {
 
           {/* Add Review Button */}
           <div className="text-center">
-            {hasSubmittedReview ? (
-              <div className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-green-800/20 to-green-700/10 text-white font-semibold rounded-xl border border-green-600/50 backdrop-blur-sm relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-green-400/20 to-green-500/10 rounded-xl"></div>
-                <div className="absolute top-1 right-2 w-8 h-8 bg-green-400/20 rounded-full blur-lg"></div>
-                <div className="absolute bottom-1 left-2 w-6 h-6 bg-green-300/15 rounded-full blur-md"></div>
-                <span className="relative z-10">✓ Review Already Added</span>
-              </div>
-            ) : (
-              <button 
-                onClick={() => setShowReviewModal(true)}
-                className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-red-800/20 to-red-700/10 text-white font-semibold rounded-xl hover:from-red-700/30 hover:to-red-600/20 transition-all duration-200 shadow-2xl hover:shadow-2xl transform hover:-translate-y-0.5 border border-red-600/50 backdrop-blur-sm relative overflow-hidden"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-red-400/20 to-red-500/10 rounded-xl"></div>
-                <div className="absolute top-1 right-2 w-8 h-8 bg-red-400/20 rounded-full blur-lg"></div>
-                <div className="absolute bottom-1 left-2 w-6 h-6 bg-red-300/15 rounded-full blur-md"></div>
-                <span className="relative z-10">Add Your Review</span>
-              </button>
-            )}
+            <button 
+              onClick={() => window.open('https://play.google.com/store/apps/details?id=com.app.followersfollowing&hl=en_IN', '_blank')}
+              className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-red-800/20 to-red-700/10 text-white font-semibold rounded-xl hover:from-red-700/30 hover:to-red-600/20 transition-all duration-200 shadow-2xl hover:shadow-2xl transform hover:-translate-y-0.5 border border-red-600/50 backdrop-blur-sm relative overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-red-400/20 to-red-500/10 rounded-xl"></div>
+              <div className="absolute top-1 right-2 w-8 h-8 bg-red-400/20 rounded-full blur-lg"></div>
+              <div className="absolute bottom-1 left-2 w-6 h-6 bg-red-300/15 rounded-full blur-md"></div>
+              <span className="relative z-10">Add Review</span>
+            </button>
           </div>
         </div>
       </main>
@@ -760,85 +573,6 @@ export default function Home() {
         </div>
       </footer>
 
-      {/* Review Modal */}
-      {showReviewModal && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-gradient-to-br from-gray-800/95 via-gray-700/90 to-gray-900/95 rounded-2xl shadow-2xl p-8 max-w-md w-full border border-gray-600/50 backdrop-blur-sm relative overflow-hidden">
-            {/* Modal Header */}
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-2xl font-bold text-white">Add Your Review</h3>
-              <button
-                onClick={() => setShowReviewModal(false)}
-                className="text-gray-400 hover:text-white transition-colors"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-
-            {/* Star Rating */}
-            <div className="mb-6">
-              <label className="block text-white font-medium mb-2">Rating</label>
-              <div className="flex space-x-1">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <button
-                    key={star}
-                    onClick={() => setRating(star)}
-                    className={`text-2xl transition-colors ${
-                      star <= rating ? 'text-yellow-400' : 'text-gray-400'
-                    } hover:text-yellow-400`}
-                  >
-                    ★
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Name Input */}
-            <div className="mb-6">
-              <label className="block text-white font-medium mb-2">Name</label>
-              <input
-                type="text"
-                value={userName}
-                onChange={(e) => setUserName(e.target.value)}
-                placeholder="Your Name"
-                className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-transparent"
-                required
-              />
-            </div>
-
-            {/* Review Text */}
-            <div className="mb-6">
-              <label className="block text-white font-medium mb-2">Your Review (80 characters max)</label>
-              <textarea
-                value={reviewText}
-                onChange={(e) => setReviewText(e.target.value)}
-                placeholder="Share your experience with us..."
-                rows={2}
-                maxLength={80}
-                className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-transparent resize-none"
-                required
-              />
-              <div className="text-right text-sm text-gray-400 mt-1">
-                {reviewText.length}/80 characters
-              </div>
-            </div>
-
-            {/* Submit Button */}
-            <button
-              onClick={handleSubmitReview}
-              disabled={isSubmitting || rating === 0 || !reviewText.trim() || !userName.trim()}
-              className="w-full py-3 bg-gradient-to-r from-red-800/20 to-red-700/10 text-white font-semibold rounded-xl hover:from-red-700/30 hover:to-red-600/20 transition-all duration-200 shadow-2xl hover:shadow-2xl transform hover:-translate-y-0.5 border border-red-600/50 backdrop-blur-sm relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-red-400/20 to-red-500/10 rounded-xl"></div>
-              <span className="relative z-10">
-                {isSubmitting ? 'Submitting...' : 'Submit Review'}
-              </span>
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   )
 }

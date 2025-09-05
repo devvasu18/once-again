@@ -271,4 +271,130 @@ body {
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+  
+  /* Modern Design Utilities */
+  .glass-effect {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  .gradient-border {
+    position: relative;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 2px;
+    border-radius: 12px;
+  }
+  
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: white;
+    border-radius: 10px;
+    z-index: -1;
+  }
+  
+  .modern-shadow {
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+  
+  .modern-shadow-lg {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+  
+  .modern-shadow-xl {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  }
+  
+  .hover-lift {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+  
+  .text-gradient {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .bg-gradient-modern {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+  
+  .animate-pulse-slow {
+    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  .animate-bounce-slow {
+    animation: bounce 2s infinite;
+  }
+  
+  /* Ash-colored texture background pattern */
+  .ash-texture-bg {
+    background: 
+      radial-gradient(circle at 20% 50%, rgba(120, 120, 120, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(100, 100, 100, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 40% 80%, rgba(140, 140, 140, 0.06) 0%, transparent 50%),
+      radial-gradient(circle at 0% 100%, rgba(110, 110, 110, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 100% 0%, rgba(130, 130, 130, 0.07) 0%, transparent 50%),
+      linear-gradient(135deg, #f8f9fa 0%, #e9ecef 25%, #dee2e6 50%, #ced4da 75%, #adb5bd 100%);
+    background-size: 400px 400px, 300px 300px, 500px 500px, 350px 350px, 450px 450px, 100% 100%;
+    background-position: 0 0, 100px 100px, 200px 200px, 300px 300px, 400px 400px, 0 0;
+    animation: textureShift 20s ease-in-out infinite;
+  }
+  
+  @keyframes textureShift {
+    0%, 100% {
+      background-position: 0 0, 100px 100px, 200px 200px, 300px 300px, 400px 400px, 0 0;
+    }
+    25% {
+      background-position: 50px 50px, 150px 150px, 250px 250px, 350px 350px, 450px 450px, 0 0;
+    }
+    50% {
+      background-position: 100px 100px, 200px 200px, 300px 300px, 400px 400px, 500px 500px, 0 0;
+    }
+    75% {
+      background-position: 25px 75px, 125px 175px, 225px 275px, 325px 375px, 425px 475px, 0 0;
+    }
+  }
+  
+  /* Refined ash texture with subtle patterns */
+  .refined-ash-bg {
+    background: 
+      radial-gradient(ellipse at top left, rgba(160, 160, 160, 0.1) 0%, transparent 60%),
+      radial-gradient(ellipse at top right, rgba(140, 140, 140, 0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at bottom left, rgba(180, 180, 180, 0.06) 0%, transparent 60%),
+      radial-gradient(ellipse at bottom right, rgba(120, 120, 120, 0.09) 0%, transparent 60%),
+      linear-gradient(45deg, 
+        #f1f3f4 0%, 
+        #e8eaed 15%, 
+        #dadce0 30%, 
+        #bdc1c6 45%, 
+        #9aa0a6 60%, 
+        #80868b 75%, 
+        #5f6368 90%, 
+        #3c4043 100%
+      );
+    background-size: 600px 600px, 500px 500px, 700px 700px, 550px 550px, 100% 100%;
+    background-position: 0 0, 200px 100px, 100px 300px, 300px 200px, 0 0;
+    animation: refinedShift 25s ease-in-out infinite;
+  }
+  
+  @keyframes refinedShift {
+    0%, 100% {
+      background-position: 0 0, 200px 100px, 100px 300px, 300px 200px, 0 0;
+    }
+    33% {
+      background-position: 100px 50px, 300px 150px, 200px 350px, 400px 250px, 0 0;
+    }
+    66% {
+      background-position: 50px 100px, 250px 200px, 150px 400px, 350px 300px, 0 0;
+    }
+  }
 }

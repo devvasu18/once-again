@@ -217,7 +217,8 @@ export default function DiscoverPage() {
   }, [isStoryOpen, currentUserIndex, currentStoryIndex])
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen relative refined-ash-bg">
+      <div className="absolute inset-0 bg-white/20"></div>
       {/* Header */}
       <header 
         className="shadow-sm border-b border-gray-200 relative overflow-hidden"
@@ -256,16 +257,19 @@ export default function DiscoverPage() {
         </div>
       </header>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Search Section */}
-        <div className="bg-white rounded-2xl shadow-sm p-6 mb-8">
-          <h1 className="text-2xl font-bold text-gray-900 mb-6">Discover Profiles</h1>
+        <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-gray-800/90 via-gray-700/80 to-gray-900/90 shadow-2xl border border-gray-600/50 backdrop-blur-sm p-8 mb-8">
+          <h1 className="text-3xl font-bold text-white mb-6 flex items-center">
+            <MagnifyingGlassIcon className="h-8 w-8 mr-3 text-purple-300" />
+            Discover Profiles
+          </h1>
           <div className="relative">
-            <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <MagnifyingGlassIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 h-6 w-6 text-gray-300" />
             <input
               type="text"
               placeholder="Search for profiles, usernames, or keywords..."
-              className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+              className="w-full pl-12 pr-4 py-4 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-300 focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-200 backdrop-blur-sm"
             />
           </div>
         </div>
@@ -275,81 +279,62 @@ export default function DiscoverPage() {
           {profiles.map((profile) => (
             <div 
               key={profile.id} 
-              className="rounded-2xl shadow-sm p-6 hover:shadow-md transition-shadow relative overflow-hidden cursor-pointer"
-              style={{
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat'
-              }}
+              className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-gray-800/90 via-gray-700/80 to-gray-900/90 shadow-2xl border border-gray-600/50 backdrop-blur-sm p-6 hover:shadow-3xl transition-all duration-300 cursor-pointer group hover:scale-105"
               onClick={() => handleProfileClick(profile)}
             >
-              <div className="absolute inset-0 "></div>
-              
-              {/* Floating Colorful Wrappers */}
-              <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                {/* Top Row */}
-                <div className="absolute top-4 left-4 w-6 h-6 bg-cyan-400 rounded-full animate-float opacity-50"></div>               
-                <div className="absolute top-6 left-1/2 w-5 h-5 bg-pink-400 rounded-full animate-float-delayed opacity-40"></div>
-                
-                {/* Middle Row */}
-                <div className="absolute top-1/3 left-6 w-8 h-8 bg-fuchsia-400 rounded-full animate-float-delayed opacity-40"></div>
-                <div className="absolute top-1/2 left-1/4 w-6 h-6 bg-indigo-400 rounded-full animate-float-delayed opacity-50"></div>
-                <div className="absolute top-1/2 right-1/4 w-8 h-8 bg-rose-400 rounded-full animate-float-slow opacity-40"></div>
-                
-                {/* Bottom Row */}
-                <div className="absolute bottom-16 left-6 w-8 h-8 bg-cyan-400 rounded-full animate-float-delayed opacity-50"></div>
-                <div className="absolute bottom-12 right-8 w-6 h-6 bg-emerald-400 rounded-full animate-float-slow opacity-60"></div>              
-                <div className="absolute bottom-10 right-1/3 w-5 h-5 bg-teal-400 rounded-full animate-float opacity-60"></div>
-              </div>
-              
               <div className="relative z-10">
-              <div className="flex items-center space-x-4 mb-4">
-                <div className="relative">
-                  <img
-                    src={profile.image}
-                    alt={profile.name}
-                    className="w-16 h-16 rounded-full object-cover"
-                  />
-                  {profile.isVerified && (
-                    <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center">
-                      <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                      </svg>
-                    </div>
-                  )}
-                </div>
-                <div className="flex-1">
-                  <h3 className="font-semibold text-gray-900 flex items-center space-x-2">
-                    <span>{profile.name}</span>
-                    {profile.isPrivate && (
-                      <svg className="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
-                      </svg>
+                <div className="flex items-center space-x-4 mb-6">
+                  <div className="relative group">
+                    <img
+                      src={profile.image}
+                      alt={profile.name}
+                      className="w-20 h-20 rounded-full object-cover border-2 border-white/20 shadow-lg group-hover:shadow-xl transition-shadow"
+                    />
+                    {profile.isVerified && (
+                      <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center border-2 border-white">
+                        <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      </div>
                     )}
-                  </h3>
-                  <p className="text-sm text-white-600">{profile.username}</p>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-bold text-white text-lg flex items-center space-x-2 group-hover:text-purple-300 transition-colors">
+                      <span>{profile.name}</span>
+                      {profile.isPrivate && (
+                        <svg className="w-4 h-4 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
+                        </svg>
+                      )}
+                    </h3>
+                    <p className="text-sm text-white/70">{profile.username}</p>
+                  </div>
                 </div>
-              </div>
 
-              {/* Stats */}
-              <div className="grid grid-cols-3 gap-4 mb-4">
-                <div className="text-center">
-                  <div className="text-lg font-semibold text-gray-900">{profile.followers}</div>
-                  <div className="text-xs text-white-600">Followers</div>
+                {/* Action Buttons */}
+                <div className="flex gap-3 mt-4">
+                  <button 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleProfileClick(profile);
+                    }}
+                    className="flex-1 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:from-purple-600 hover:to-pink-600 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105"
+                  >
+                    Watch Story
+                  </button>
+                  <button 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      // Add view profile functionality here
+                      console.log('View profile:', profile.name);
+                    }}
+                    className="flex-1 bg-white/10 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-white/20 transition-all duration-200 border border-white/20 hover:border-white/40"
+                  >
+                    View Profile
+                  </button>
                 </div>
-                <div className="text-center">
-                  <div className="text-lg font-semibold text-gray-900">{profile.following}</div>
-                  <div className="text-xs text-white-600">Following</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-lg font-semibold text-gray-900">{profile.posts}</div>
-                  <div className="text-xs text-white-600">Posts</div>
-                </div>
-                              </div>
-
-               
               </div>
-              </div>
+            </div>
             ))}
         </div>
       </div>
@@ -478,15 +463,16 @@ export default function DiscoverPage() {
 
       {/* Footer */}
       <footer 
-        className="border-t border-gray-200 relative mt-8"
+        className="relative z-10 border-t border-white/20 mt-8 overflow-hidden"
         style={{
-          backgroundImage: 'url(https://cdn-public.notjustanalytics.com/homepage/background.webp)',
+          backgroundImage: 'url("https://cdn-public.notjustanalytics.com/homepage/background.webp")',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'
         }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="absolute inset-0 bg-black/20"></div>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center text-white">
             <p>&copy; 2024 Instalker . All rights reserved.</p>
           </div>

@@ -676,10 +676,11 @@ export default function HomePage() {
   const displayStalkers = showMoreStalkers ? [...secretStalkers, ...additionalStalkers] : secretStalkers
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen relative refined-ash-bg">
+      <div className="absolute inset-0 bg-white/20"></div>
       {/* Header */}
       <header 
-        className="shadow-sm border-b border-gray-200 relative overflow-hidden"
+        className="relative z-10 shadow-sm border-b border-gray-200 overflow-hidden"
         style={{
           backgroundImage: 'url("https://cdn-public.notjustanalytics.com/homepage/background.webp")',
           backgroundSize: 'cover',
@@ -688,25 +689,25 @@ export default function HomePage() {
         }}
       >
         <div className="absolute inset-0 bg-black/20"></div>
-        <div className="relative z-10 max-w-7xl mx-auto  ">
+        <div className="relative z-10 max-w-7xl mx-auto">
           <div className="flex justify-between items-center py-2">
             <div className="flex items-center">
               <Link href="/" className="text-2xl font-bold text-white">Instalker</Link>
             </div>
             <nav className="hidden md:flex space-x-8">
-              <Link href="/home" className="flex items-center space-x-1 text-white hover:text-white/90 transition-colors">
+              <Link href="/home" className="flex items-center space-x-1 text-white hover:text-purple-300 transition-colors">
                 <HomeIcon className="h-5 w-5" />
                 <span>Home</span>
               </Link>
-              <Link href="/discover" className="flex items-center space-x-1 text-white/90 hover:text-white transition-colors">
+              <Link href="/discover" className="flex items-center space-x-1 text-white/90 hover:text-purple-300 transition-colors">
                 <MagnifyingGlassIcon className="h-5 w-5" />
                 <span>Discover</span>
               </Link>
-              <Link href="/stats" className="flex items-center space-x-1 text-white/90 hover:text-white transition-colors">
+              <Link href="/stats" className="flex items-center space-x-1 text-white/90 hover:text-purple-300 transition-colors">
                 <ChartBarIcon className="h-5 w-5" />
                 <span>Stats</span>
               </Link>
-              <Link href="/profile" className="flex items-center space-x-1 text-white/90 hover:text-white transition-colors">
+              <Link href="/profile" className="flex items-center space-x-1 text-white/90 hover:text-purple-300 transition-colors">
                 <UserIcon className="h-5 w-5" />
                 <span>Profile</span>
               </Link>
@@ -715,11 +716,11 @@ export default function HomePage() {
         </div>
       </header>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
         {/* Profile Header Section */}
         <div 
-          className="rounded-2xl shadow-sm p-6 mb-6 relative overflow-hidden"
+          className="rounded-3xl shadow-xl p-8 mb-8 relative overflow-hidden border border-gray-100"
           style={{
             backgroundImage: 'url("https://cdn-public.notjustanalytics.com/homepage/background.webp")',
             backgroundSize: 'cover',
@@ -727,239 +728,173 @@ export default function HomePage() {
             backgroundRepeat: 'no-repeat'
           }}
         >
-          <div className="absolute inset-0 "></div>
+          <div className="absolute inset-0 bg-black/20"></div>
           <div className="relative z-10">
-          <div className="flex items-start space-x-6">
-            {/* Profile Picture */}
-            <div className="relative">
-              <div className="w-24 h-24 rounded-full bg-gradient-to-r from-purple-500 to-orange-500 p-1">
-                <div className="w-full h-full rounded-full overflow-hidden bg-white p-1">
-                  <img
-                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face"
-                    alt="Profile"
-                    className="w-full h-full object-cover rounded-full"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Profile Info */}
-            <div className="flex-1">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h1 className="text-2xl font-bold text-gray-900 flex items-center space-x-2">
-                    <span>VASU</span>
-                  </h1>
-                  <p className="text-white-600 mt-1">
-                    Last updated: <span className="font-bold text-black">{new Date().toLocaleString('en-US', { 
-                      hour: 'numeric', 
-                      minute: '2-digit', 
-                      hour12: true
-                    })}</span>
-                  </p>
-                </div>
-                <button className="p-2 text-gray-400 hover:text-gray-600">
-                  <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
-                  </svg>
-                </button>
-              </div>
-
-              {/* Statistics */}
-              <div className="flex space-x-8 mt-6">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-gray-900 transition-all duration-300">
-                    {followersCount.toLocaleString()}
-                  </div>
-                  <div className="text-sm text-white-600">Followers</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-gray-900 transition-all duration-300">
-                    {followingsCount.toLocaleString()}
-                  </div>
-                  <div className="text-sm text-white-600">Followings</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-gray-900 transition-all duration-300">
-                    {postsCount.toLocaleString()}
-                  </div>
-                  <div className="text-sm text-white-600">Posts</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          </div>
-        </div>
-
-        {/* Stories Section */}
-        <div className="bg-white rounded-2xl shadow-sm p-6 mb-6 relative overflow-hidden">
-          <div 
-            className="absolute inset-0"
-            style={{
-             backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
-              opacity: 0.9
-            }}
-          ></div>
-          
-          {/* Floating Colorful Wrappers */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <div className="absolute top-4 left-4 w-8 h-8 bg-pink-400 rounded-full animate-float opacity-60"></div>
-            <div className="absolute top-12 right-8 w-6 h-6 bg-blue-400 rounded-full animate-float-delayed opacity-50"></div>
-            <div className="absolute top-20 left-12 w-4 h-4 bg-yellow-400 rounded-full animate-float-slow opacity-70"></div>
-            <div className="absolute top-32 right-16 w-10 h-10 bg-green-400 rounded-full animate-float opacity-40"></div>
-            <div className="absolute top-40 left-20 w-5 h-5 bg-purple-400 rounded-full animate-float-delayed opacity-60"></div>
-            <div className="absolute top-48 right-24 w-7 h-7 bg-red-400 rounded-full animate-float-slow opacity-50"></div>
-            <div className="absolute top-56 left-32 w-6 h-6 bg-indigo-400 rounded-full animate-float opacity-45"></div>
-            <div className="absolute top-64 right-32 w-8 h-8 bg-orange-400 rounded-full animate-float-delayed opacity-55"></div>
-            <div className="absolute top-72 left-40 w-5 h-5 bg-teal-400 rounded-full animate-float-slow opacity-65"></div>
-            <div className="absolute top-80 right-40 w-9 h-9 bg-rose-400 rounded-full animate-float opacity-35"></div>
-          </div>
-          
-          <div className="relative z-10">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Stories</h2>
-          <div className="flex space-x-4 overflow-x-auto pb-2 scrollbar-hide">
-            {storyUsers.map((user, index) => (
-              <div key={user.id} className="flex-shrink-0 text-center">
-                <div 
-                  className="w-16 h-16 rounded-full bg-gradient-to-r from-purple-500 to-orange-500 p-1 mx-auto mb-2 cursor-pointer hover:scale-105 transition-transform"
-                  onClick={() => openStory(index)}
-                >
-                  <div className="w-full h-full rounded-full overflow-hidden bg-white p-0.5">
+            <div className="flex items-start space-x-8">
+              {/* Profile Picture */}
+              <div className="relative group">
+                <div className="w-28 h-28 rounded-full bg-gradient-to-r from-purple-500 to-orange-500 p-1 shadow-2xl group-hover:shadow-purple-500/25 transition-all duration-300">
+                  <div className="w-full h-full rounded-full overflow-hidden bg-white p-1">
                     <img
-                      src={user.image}
-                      alt={user.name}
+                      src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face"
+                      alt="Profile"
                       className="w-full h-full object-cover rounded-full"
                     />
                   </div>
                 </div>
-                <p className="text-xs text-gray-600 truncate w-16">{user.name}</p>
+                
               </div>
-            ))}
+
+              {/* Profile Info */}
+              <div className="flex-1">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h1 className="text-3xl font-bold text-white flex items-center space-x-3">
+                      <span>VASU</span>                     
+                    </h1>
+                    <p className="text-white/90 mt-2 text-lg">
+                      Last updated: <span className="font-bold text-white">{new Date().toLocaleString('en-US', { 
+                        hour: 'numeric', 
+                        minute: '2-digit', 
+                        hour12: true
+                      })}</span>
+                    </p>
+                  </div>
+                  <button className="p-3 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-all duration-200">
+                    <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                    </svg>
+                  </button>
+                </div>
+
+                {/* Statistics */}
+                <div className="flex space-x-12 mt-8">
+                  <div className="text-center group">
+                    <div className="text-3xl font-bold text-white transition-all duration-300 group-hover:scale-110">
+                      {followersCount.toLocaleString()}
+                    </div>
+                    <div className="text-sm text-white/80 font-medium">Followers</div>
+                  </div>
+                  <div className="text-center group">
+                    <div className="text-3xl font-bold text-white transition-all duration-300 group-hover:scale-110">
+                      {followingsCount.toLocaleString()}
+                    </div>
+                    <div className="text-sm text-white/80 font-medium">Followings</div>
+                  </div>
+                  <div className="text-center group">
+                    <div className="text-3xl font-bold text-white transition-all duration-300 group-hover:scale-110">
+                      {postsCount.toLocaleString()}
+                    </div>
+                    <div className="text-sm text-white/80 font-medium">Posts</div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
+        </div>
+
+        {/* Stories Section */}
+        <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-gray-800/90 via-gray-700/80 to-gray-900/90 shadow-2xl border border-gray-600/50 backdrop-blur-sm p-6 mb-6">
+          
+          <div className="relative z-10">
+            <h2 className="text-xl font-bold text-white mb-6 flex items-center">
+              Stories
+            </h2>
+            <div className="flex space-x-4 overflow-x-auto pb-2 scrollbar-hide">
+              {storyUsers.map((user, index) => (
+                <div key={user.id} className="flex-shrink-0 text-center group">
+                  <div 
+                    className="w-16 h-16 rounded-full bg-gradient-to-r from-purple-500 to-orange-500 p-1 mx-auto mb-2 cursor-pointer hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-xl"
+                    onClick={() => openStory(index)}
+                  >
+                    <div className="w-full h-full rounded-full overflow-hidden bg-white p-0.5">
+                      <img
+                        src={user.image}
+                        alt={user.name}
+                        className="w-full h-full object-cover rounded-full"
+                      />
+                    </div>
+                  </div>
+                  <p className="text-xs text-white/90 truncate w-16 font-medium group-hover:text-purple-300 transition-colors">{user.name}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
         {/* Secret Stalkers Section */}
-        <div className="bg-white rounded-2xl shadow-sm p-6 relative overflow-hidden">
-          <div 
-            className="absolute inset-0"
-            style={{
-             
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
-              opacity: 0.9
-            }}
-          ></div>
+        <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-gray-800/90 via-gray-700/80 to-gray-900/90 shadow-2xl border border-gray-600/50 backdrop-blur-sm p-6">
           
           <div className="relative z-10">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Secret Stalkers</h2>
-          <div className="space-y-3">
-            {displayStalkers.map((stalker) => (
-              <div key={stalker.id} className="flex items-center space-x-4 p-3 rounded-lg hover:bg-gray-50 transition-colors">
-                <div className="relative">
-                  <img
-                    src={stalker.image}
-                    alt={stalker.name}
-                    className="w-12 h-12 rounded-full object-cover"
-                  />
-                  {!stalker.isUnlocked && (
-                    <div className="absolute inset-0 bg-black bg-opacity-50 rounded-full flex items-center justify-center">
-                      <LockClosedIcon className="h-4 w-4 text-white" />
-                    </div>
-                  )}
-                </div>
-                
-                <div className="flex-1">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h3 className="font-medium text-gray-900">{stalker.name}</h3>
-                      <p className="text-sm text-gray-600">{stalker.username}</p>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      {stalker.isUnlocked ? (
-                        <span className="text-purple-600 text-sm font-medium">{stalker.status}</span>
-                      ) : (
-                        <button className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-medium hover:bg-purple-200 transition-colors">
-                          Unlock Now
-                        </button>
-                      )}
+            <h2 className="text-xl font-bold text-white mb-6 flex items-center">        
+              Secret Stalkers
+            </h2>
+            <div className="space-y-4">
+              {displayStalkers.map((stalker) => (
+                <div key={stalker.id} className="flex items-center space-x-4 p-4 rounded-xl hover:bg-white/10 transition-all duration-300 group border border-white/20">
+                  <div className="relative">
+                    <img
+                      src={stalker.image}
+                      alt={stalker.name}
+                      className="w-14 h-14 rounded-full object-cover shadow-md group-hover:shadow-lg transition-shadow"
+                    />
+                    {!stalker.isUnlocked && (
+                      <div className="absolute inset-0 bg-black/60 rounded-full flex items-center justify-center">
+                        <LockClosedIcon className="h-5 w-5 text-white" />
+                      </div>
+                    )}
+                  </div>
+                  
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h3 className="font-semibold text-white group-hover:text-purple-300 transition-colors">{stalker.name}</h3>
+                        <p className="text-sm text-white/70">{stalker.username}</p>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        {stalker.isUnlocked ? (
+                          <span className="bg-green-500/20 text-green-300 px-3 py-1 rounded-full text-sm font-medium border border-green-400/30">
+                            {stalker.status}
+                          </span>
+                        ) : (
+                          <button className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-full text-sm font-medium hover:from-purple-600 hover:to-pink-600 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105">
+                            Unlock Now
+                          </button>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-          
-          {/* Discover More Button */}
-          {!showMoreStalkers && (
-            <div className="mt-6 text-center">
-              <button 
-                onClick={() => setShowMoreStalkers(true)}
-                className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-8 rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
-              >
-                Discover More
-              </button>
+              ))}
             </div>
-          )}
-          </div>
-          
-          {/* Floating Colorful Wrappers - Full Section Coverage */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            {/* Top Row */}
-            <div className="absolute top-4 left-4 w-6 h-6 bg-cyan-400 rounded-full animate-float opacity-50"></div>
-            <div className="absolute top-8 right-8 w-5 h-5 bg-emerald-400 rounded-full animate-float-delayed opacity-60"></div>
-            <div className="absolute top-1/3 left-6 w-8 h-8 bg-fuchsia-400 rounded-full animate-float-delayed opacity-40"></div>
-            <div className="absolute top-1/3 right-12 w-6 h-6 bg-lime-400 rounded-full animate-float-slow opacity-70"></div>
-            <div className="absolute top-1/3 left-1/2 w-5 h-5 bg-sky-400 rounded-full animate-float opacity-35"></div>
-            <div className="absolute top-1/3 right-1/3 w-9 h-9 bg-pink-400 rounded-full animate-float-delayed opacity-50"></div>
-            <div className="absolute top-12 left-12 w-7 h-7 bg-violet-400 rounded-full animate-float-slow opacity-45"></div>
-            <div className="absolute top-16 right-16 w-4 h-4 bg-amber-400 rounded-full animate-float opacity-55"></div>
             
-            {/* Middle Row */}
-            <div className="absolute top-1/3 left-6 w-8 h-8 bg-fuchsia-400 rounded-full animate-float-delayed opacity-40"></div>
-            <div className="absolute top-1/3 right-12 w-6 h-6 bg-lime-400 rounded-full animate-float-slow opacity-70"></div>
-            <div className="absolute top-1/3 left-1/2 w-5 h-5 bg-sky-400 rounded-full animate-float opacity-35"></div>
-            <div className="absolute top-1/3 right-1/3 w-9 h-9 bg-pink-400 rounded-full animate-float-delayed opacity-50"></div>
-            
-            {/* Center Area */}
-            <div className="absolute top-1/2 left-8 w-7 h-7 bg-orange-400 rounded-full animate-float-slow opacity-65"></div>
-            <div className="absolute top-1/2 right-8 w-5 h-5 bg-green-400 rounded-full animate-float opacity-45"></div>
-            <div className="absolute top-1/3 left-6 w-8 h-8 bg-fuchsia-400 rounded-full animate-float-delayed opacity-40"></div>
-            <div className="absolute top-1/3 right-12 w-6 h-6 bg-lime-400 rounded-full animate-float-slow opacity-70"></div>
-            <div className="absolute top-1/3 left-1/2 w-5 h-5 bg-sky-400 rounded-full animate-float opacity-35"></div>
-            <div className="absolute top-1/3 right-1/3 w-9 h-9 bg-pink-400 rounded-full animate-float-delayed opacity-50"></div>
-            <div className="absolute top-1/2 left-1/4 w-6 h-6 bg-indigo-400 rounded-full animate-float-delayed opacity-50"></div>
-            <div className="absolute top-1/2 right-1/4 w-8 h-8 bg-rose-400 rounded-full animate-float-slow opacity-40"></div>
-            
-            {/* Bottom Middle */}
-            <div className="absolute top-2/3 left-10 w-5 h-5 bg-yellow-400 rounded-full animate-float opacity-60"></div>
-            <div className="absolute top-2/3 right-10 w-7 h-7 bg-teal-400 rounded-full animate-float-delayed opacity-45"></div>
-            <div className="absolute top-2/3 left-1/3 w-6 h-6 bg-purple-400 rounded-full animate-float-slow opacity-35"></div>
-            <div className="absolute top-2/3 right-1/3 w-4 h-4 bg-red-400 rounded-full animate-float opacity-70"></div>
-            
-            {/* Bottom Row */}
-            <div className="absolute bottom-16 left-6 w-8 h-8 bg-cyan-400 rounded-full animate-float-delayed opacity-50"></div>
-            <div className="absolute bottom-12 right-8 w-6 h-6 bg-emerald-400 rounded-full animate-float-slow opacity-60"></div>
-            <div className="absolute bottom-8 left-12 w-5 h-5 bg-violet-400 rounded-full animate-float opacity-45"></div>
-            <div className="absolute bottom-4 right-12 w-7 h-7 bg-amber-400 rounded-full animate-float-delayed opacity-55"></div>
+            {/* Discover More Button */}
+            {!showMoreStalkers && (
+              <div className="mt-8 text-center">
+                <button 
+                  onClick={() => setShowMoreStalkers(true)}
+                  className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-4 px-10 rounded-xl transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105"
+                >
+                  Discover More Stalkers
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
 
       {/* Footer */}
       <footer 
-        className="border-t border-gray-200 relative mt-8"
+        className="relative z-10 border-t border-white/20 mt-8 overflow-hidden"
         style={{
-          backgroundImage: 'url(https://cdn-public.notjustanalytics.com/homepage/background.webp)',
+          backgroundImage: 'url("https://cdn-public.notjustanalytics.com/homepage/background.webp")',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'
         }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="absolute inset-0 bg-black/20"></div>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 ml-10 mr-10">
           <div className="text-center text-white">
             <p>&copy; 2024 Instalker . All rights reserved.</p>
           </div>
